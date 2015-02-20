@@ -1,5 +1,5 @@
 # NSA
 Enostavni rezervacijski sistemi<br/>
-člani:
+člani:<br/>
 1 bosanc
 2 slovenca
