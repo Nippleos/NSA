@@ -36,6 +36,5 @@ if(isset($_POST['submit'])){
 		window.location.href="signin.php";
 	});
 </script>
-
 </body>
 </html>
