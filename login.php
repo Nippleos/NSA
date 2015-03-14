@@ -4,12 +4,16 @@ if(isset($_POST['submit'])){
 	global $conn;
 	$conn=new mysqli('localhost','admgorant','nahod5afekt','anaslex');
 	if ($conn->connect_error) {
-		$error_message="Napaka pri povezavi z bazo: ".$conn->connect_error;
-		$_SESSION['user']=$_POST['username'];
+		$error_message="Napaka pri povezavi z bazo: ".$conn->connect_error;		
 		echo '<script type="text/javascript">alert("'.$error_message.'");</script>';
 		header('Location: login.php');
 		exit();
 	}else{
+		$_SESSION['user']=$_POST['username'];
+		$value='SELECT Username,Pass FROM Users 
+			WHERE Username="'.$_POST["username"].'" 
+			AND Pass="'.$_POST["password"].'"';
+		$rs=$conn->query($value);
 		header('Location: first.php');
 	}
 }
