@@ -2,19 +2,20 @@
 session_start();
 if(isset($_POST['submit'])){
 	global $conn;
-	$conn=new mysqli('localhost','admgorant','nahod5afekt','anaslex');
-	if ($conn->connect_error) {
-		$error_message="Napaka pri povezavi z bazo: ".$conn->connect_error;		
-		echo '<script type="text/javascript">alert("'.$error_message.'");</script>';
-		header('Location: login.php');
+	$conn=new mysqli('localhost','admgorant','nahod5afekt',"anaslex");
+	if ($conn->connect_error){
+		$error_message="Napaka pri povezavi z bazo: ".$conn->connect_error;
+		echo '<script>alert("Wrong SQL: '.$error_message.'"); window.location.href="login.php"; </script>';
 		exit();
 	}else{
-		$_SESSION['user']=$_POST['username'];
-		$value='SELECT Username,Pass FROM Users 
-			WHERE Username="'.$_POST["username"].'" 
-			AND Pass="'.$_POST["password"].'"';
+		$value='SELECT Username,Pass FROM Users WHERE Username="'.$_POST["username"].'" AND Pass="'.$_POST["password"].'";';
 		$rs=$conn->query($value);
-		header('Location: first.php');
+		if($rs===false){
+			echo '<script>alert("Wrong SQL: '.$conn->error.'"); window.location.href="login.php"; </script>';
+		}else{
+			$arr=$rs->fetch_all(MYSQLI_ASSOC);
+
+		}
 	}
 }
 
