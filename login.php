@@ -14,12 +14,10 @@ if(isset($_POST['submit'])){
 			echo '<script>alert("Wrong SQL: '.$conn->error.'"); window.location.href="login.php"; </script>';
 		}else{
 			$arr=$rs->fetch_all(MYSQLI_ASSOC);
-
+			
 		}
 	}
 }
-
-
 ?><!DOCTYPE html>
 <html>
 <head>
