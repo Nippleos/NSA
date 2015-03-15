@@ -8,11 +8,11 @@
 
 <body>
 	<form id="registration">
-		Username:<input type="text" placeholder="Username" name="Username" maxlength="20"><br>
-		Password:<input type="password" placeholder="Password" name="Password" maxlength="40"><br>
-		Name:<input type="text" placeholder="Name" name="Name" maxlength="20"><br>
-		Surname:<input type="text" placeholder="Surname" name="Surname" maxlength="20"><br>
-		Emso:<input type="number" placeholder="Emšo" name="emso" onKeyDown="if(this.value.length==13) return false;"><br>
+		Username:<input type="text" id="username" placeholder="Username" name="Username" maxlength="20" required autofocus><br>
+		Password:<input type="password" placeholder="Password" name="Password" maxlength="40" required><br>
+		Name:<input type="text" placeholder="Name" name="Name" maxlength="20" required><br>
+		Surname:<input type="text" placeholder="Surname" name="Surname" maxlength="20" required><br>
+		Emso:<input type="number" placeholder="Emšo" name="emso" onKeyDown="if(this.value.length==13) return false;" required><br>
 		<input type="button" value="Sign in" id="sign_in"><br>
 	</form>
 <script>

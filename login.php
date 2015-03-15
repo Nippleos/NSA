@@ -8,13 +8,19 @@ if(isset($_POST['submit'])){
 		echo '<script>alert("Wrong SQL: '.$error_message.'"); window.location.href="login.php"; </script>';
 		exit();
 	}else{
-		$value='SELECT Username,Password FROM Users WHERE Username="'.sha1($_POST["username"]).'" AND Password="'.sha1($_POST["password"]).'";';
+		$value='SELECT Username FROM Users WHERE Username="'.$_POST["username"].'" AND Password="'.sha1($_POST["password"]).'";';
 		$rs=$conn->query($value);
 		if($rs===false){
 			echo '<script>alert("Wrong SQL: '.$conn->error.'"); window.location.href="login.php"; </script>';
 		}else{
 			$arr=$rs->fetch_all(MYSQLI_ASSOC);
-			echo '<script>alert("Napačni vpisni podatki. Vstvari novega ali pa popravi podatke."); window.location.href="login.php"; </script>';
+			if(empty($arr)){
+				echo '<script>alert("Napačni vpisni podatki. Vstvari novega ali pa popravi podatke."); window.location.href="login.php"; </script>';
+			}else{
+				$_SESSION['user']=$arr[0]['Username'];
+				echo '<script>window.location.href="first.php"; </script>';
+			}
+			
 		}
 	}
 }
@@ -26,11 +32,12 @@ if(isset($_POST['submit'])){
 
 <body>
 <form method="post" action="login.php">
-	Uporabniško ime: <input type="text" name="username"><br>
-	Geslo: <input type="password" name="password"><br>
+	Uporabniško ime: <input type="text" name="username" required autofocus><br>
+	Geslo: <input type="password" name="password" required><br>
 	<input type="submit" name="submit" value="Prijavi se">
 </form>
 <input type="button" value="Nov uporabnik" id="new_user">
+<br><br>//Upravitelj,Upravitelj
 <script>
 	$('#new_user').on('click',function(){
 		window.location.href="signin.php";

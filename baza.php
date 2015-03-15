@@ -2,8 +2,8 @@ drop table IF EXISTS ChossingAnAssignement;
 drop table IF EXISTS CollectionOfAssignements;
 drop table IF EXISTS Collection;
 drop table IF EXISTS Assignements;
-drop table IF EXISTS Status;
 drop table IF EXISTS Users;
+drop table IF EXISTS Status;
 
 Create table Users (
 	UserID Int UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -63,3 +63,4 @@ INSERT INTO Status VALUES(NULL,"Upravitelj");
 INSERT INTO Status VALUES(NULL,"Učitelj");
 INSERT INTO Status VALUES(NULL,"Kandidat");
 
+INSERT INTO Users VALUES(NULL,1,"Upravitelj","39a64224dba85cd69826d4aa14995e1e97bac831","Janko","Novak","0101996500123");
