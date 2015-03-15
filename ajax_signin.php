@@ -15,8 +15,13 @@
 				echo json_encode("Username: ".$_POST['username']." is already used. Choose another one");
 			}else{
 				$a=array();
-				foreach ($_POST as $key) {
-					$a[]=mysqli_real_escape_string($conn,$key);
+
+				foreach ($_POST as $key=>$value) {
+					if($key==="password"){
+						$value=sha1($value);
+					}
+					$a[]=mysqli_real_escape_string($conn,$value);
+
 				}
 				$value='INSERT INTO Users VALUES(NULL,"3","'.$a[0].'","'.$a[1].'","'.$a[2].'","'.$a[3].'","'.$a[4].'");';
 				$rs=$conn->query($value);

@@ -1,5 +1,8 @@
 <?php
-
+	session_start();
+	if(isset($_SESSION['user'])){
+		unset($_SESSION['user']);
+	}
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +30,10 @@
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var data=JSON.parse(xmlhttp.responseText);
-				alert(data);
+				if(data==="1"){
+					alert("Application was succesfull.")
+					window.location.href="login.php";
+				}
 			}
 		}
 		xmlhttp.open("POST","ajax_signin.php",true);
