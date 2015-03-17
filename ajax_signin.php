@@ -5,7 +5,7 @@
 	if($conn->connect_error){
 		echo json_encode('Database connection failed: '.$conn->connect_error);
 	}else{
-		$value='SELECT Username FROM Users WHERE Username="'.$_POST["username"].'";';
+		$value='SELECT Username FROM Users WHERE Username="'.mysqli_real_escape_string($conn,$_POST["username"]).'";';
 		$rs=$conn->query($value);
 		if($rs===false){
 			echo json_encode("Database error.");
@@ -21,7 +21,6 @@
 						$value=sha1($value);
 					}
 					$a[]=mysqli_real_escape_string($conn,$value);
-
 				}
 				$value='INSERT INTO Users VALUES(NULL,"3","'.$a[0].'","'.$a[1].'","'.$a[2].'","'.$a[3].'","'.$a[4].'");';
 				$rs=$conn->query($value);
