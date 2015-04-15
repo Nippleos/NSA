@@ -1,4 +1,4 @@
-drop table IF EXISTS ChossingAnAssignement;
+﻿drop table IF EXISTS ChossingAnAssignement;
 drop table IF EXISTS CollectionOfAssignements;
 drop table IF EXISTS Collection;
 drop table IF EXISTS Assignements;
@@ -13,6 +13,7 @@ Create table Users (
 	Name Char(20) NOT NULL,
 	Surname Char(30),
 	Emso Char(13),
+	Checked int not null,
  Primary Key (UserID)) ENGINE = InnoDB charset=utf8;
 
 Create table Status (
@@ -63,4 +64,4 @@ INSERT INTO Status VALUES(NULL,"Upravitelj");
 INSERT INTO Status VALUES(NULL,"Učitelj");
 INSERT INTO Status VALUES(NULL,"Kandidat");
 
-INSERT INTO Users VALUES(NULL,1,"Upravitelj","39a64224dba85cd69826d4aa14995e1e97bac831","Janko","Novak","0101996500123");
+INSERT INTO Users VALUES(NULL,1,"admin","d033e22ae348aeb5660fc2140aec35850c4da997","Janko","Novak","0101996500123",1);

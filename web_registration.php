@@ -25,8 +25,8 @@
 		<input type="text" name="name" id="name" placeholder="Name" required>
 		<label id="icon" for="surname"><img src="images/profile2.png"></label>
 		<input type="text" name="surname" id="surname" placeholder="Surname" required>
-		<label id="icon" for="contact"><img src="images/phone.png"></label>
-		<input type="text" name="contact" id="contact" placeholder="Contact" required>
+		<label id="icon" for="emso"><img src="images/phone.png"></label>
+		<input type="number" name="emso" id="emso" placeholder="Emšo" required>
 		<a href="#" class="button" id="sign_in">Register</a>
 	</form>
 	<hr>
@@ -39,8 +39,8 @@
 		var password=encodeURIComponent($("#registration input[name=password]").val());
 		var name=encodeURIComponent($("#registration input[name=name]").val());
 		var surname=encodeURIComponent($("#registration input[name=surname]").val());
-		var contact=encodeURIComponent($("#registration input[name=contact]").val());
-		var parameters="username="+username+"&password="+password+"&name="+name+"&surname="+surname+"&contact="+contact;
+		var contact=encodeURIComponent($("#registration input[name=emso]").val());
+		var parameters="username="+username+"&password="+password+"&name="+name+"&surname="+surname+"&emso="+emso;
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 				var data=JSON.parse(xmlhttp.responseText);
@@ -50,7 +50,6 @@
 				}else{
 					$("#registration input[name=username]").focus();
 					alert(data);
-
 				}
 			}
 		}

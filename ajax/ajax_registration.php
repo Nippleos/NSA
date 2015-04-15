@@ -20,7 +20,7 @@
 					}
 					$a[]=mysqli_real_escape_string($conn,$value);
 				}
-				$value='INSERT INTO Users VALUES(NULL,"'.$a[0].'","'.$a[1].'","'.$a[2].'","'.$a[3].'",CURRENT_DATE,"'.$a[4].'",0,"user");';
+				$value='INSERT INTO Users VALUES(NULL,3,"'.$a[0].'","'.$a[1].'","'.$a[2].'","'.$a[3].'","'.$a[4].'",0);';
 				$rs=$conn->query($value);
 				if($rs===false){
 					echo json_encode("Unknown error.");
