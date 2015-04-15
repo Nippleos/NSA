@@ -34,8 +34,10 @@
 					<li><a href="#">Page 3</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+					<li><a id="glyphicon-registration-mark" href="#"><span class="glyphicon glyphicon-registration-mark"></span> New users</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
 					<li><a id="logout" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
 				</ul>
 			</div>
 		</div>
@@ -46,7 +48,9 @@
 		<div class="clearfix visible-lg"></div>
 		<div class="row">
 		<div class="col-md-3">
-			<p>kr en tekst</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget ligula finibus felis ullamcorper pellentesque. Phasellus quis lobortis urna. Curabitur in vehicula lectus. Phasellus pharetra, lacus eu sollicitudin tincidunt, ex elit rutrum nisl, non placerat urna dolor at justo. Aenean ultrices pharetra pretium. Vestibulum maximus tempus ex ac auctor. Integer dapibus dui nisl, nec porta leo vulputate vitae. Praesent auctor sapien lacinia, scelerisque ipsum non, laoreet quam. Vestibulum sit amet metus posuere, iaculis ex eget, ultrices ipsum. Pellentesque lobortis blandit augue, a blandit urna euismod ut. Integer a nunc ut orci blandit bibendum. Donec vel facilisis tortor, non rutrum orci. Integer id consequat dui.
+				Ut a lacus dapibus, facilisis ex nec, mattis eros. Fusce sodales finibus consectetur. In facilisis mi libero, eu ornare nisl sollicitudin id. Duis commodo felis eros, vel dapibus nisl eleifend sit amet. Suspendisse sit amet porta ipsum. Morbi vel nisi volutpat, sollicitudin ligula elementum, aliquet turpis. Sed finibus est in risus rhoncus hendrerit. Ut eleifend diam odio, a eleifend magna sodales sit amet. Duis non ex purus. Nulla id justo lectus. Vivamus ornare tempor elit sed bibendum. Vivamus maximus at orci ac porttitor. Curabitur vitae justo fermentum, ultrices risus ut, bibendum felis. Maecenas at nisl fringilla, maximus ante at, ultrices metus. Vestibulum nunc ligula, faucibus nec urna in, tristique mollis risus. Morbi semper sit amet nunc ac dictum.
+			</p>
 	    </div>
 	</div>	
 	</div>
@@ -56,6 +60,9 @@
 		//$('#topbar').remove();
 		$('#logout').on('click',function(){
 			document.location = 'web_logout.php';
+		});
+		$('#glyphicon-registration-mark').on('click',function(){
+
 		});
 	</script>
 </body>
