@@ -37,7 +37,7 @@
 		var password=encodeURIComponent($("#registration input[name=password]").val());
 		var name=encodeURIComponent($("#registration input[name=name]").val());
 		var surname=encodeURIComponent($("#registration input[name=surname]").val());
-		var contact=encodeURIComponent($("#registration input[name=emso]").val());
+		var emso=encodeURIComponent($("#registration input[name=emso]").val());
 		var parameters="username="+username+"&password="+password+"&name="+name+"&surname="+surname+"&emso="+emso;
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState==4 && xmlhttp.status==200) {

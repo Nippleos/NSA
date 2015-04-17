@@ -19,13 +19,13 @@ $('#glyphicon-registration-mark').on('click',function(){
 		if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var data=JSON.parse(xmlhttp.responseText);
 			$('#new_users_table').empty();
-			$('#new_users_table').append('<tr><th>User ID</th><th>Username</th><th>Name</th><th>Surname</th><th>Emso</th><th>Status ID</th><th>Toys</th></tr>');
+			$('#new_users_table').append('<tr><th></th><th>User ID</th><th>Username</th><th>Name</th><th>Surname</th><th>Emso</th><th>Status ID</th><th>Toys</th></tr>');
 			if("empty" in data){
 				$('#new_users_table').empty();
 				$('#new_users_table').append('<th>'+data['empty']+'</th>');
 			}
 			$.each(data,function(key,value){
-				$('#new_users_table').append('<tr><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td>igrače</td></tr>');
+				$('#new_users_table').append('<tr><td><input type="checkbox" name="" value=""></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td>igrače</td></tr>');
 			});		
 		}
 	}
