@@ -24,36 +24,52 @@
 		<label id="icon" for="surname"><img src="images/profile2.png"></label>
 		<input type="text" name="surname" id="surname" placeholder="Surname" required>
 		<label id="icon" for="emso"><img src="images/phone.png"></label>
-		<input type="number" name="emso" id="emso" placeholder="Emšo" required>
+		<input type="number" name="emso" id="emso" placeholder="Emšo" min="1000000000000" max="9999999999999" required>
 		<a href="#" class="button" id="sign_in">Register</a>
 	</form>
 	<hr>
 	<div id="return_back"><img src="images/back.png"></div>
 </div>
+<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
 <script>
 	$('#sign_in').on('click',function(){
-		var xmlhttp=new XMLHttpRequest(); 
-		var username=encodeURIComponent($("#registration input[name=username]").val());
-		var password=encodeURIComponent($("#registration input[name=password]").val());
-		var name=encodeURIComponent($("#registration input[name=name]").val());
-		var surname=encodeURIComponent($("#registration input[name=surname]").val());
-		var emso=encodeURIComponent($("#registration input[name=emso]").val());
-		var parameters="username="+username+"&password="+password+"&name="+name+"&surname="+surname+"&emso="+emso;
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState==4 && xmlhttp.status==200) {
-				var data=JSON.parse(xmlhttp.responseText);
-				if(data==="1"){
-					alert("Application was succesfull. Once admin activate this account, you will be able to login.")
-					window.location.href="web_login.php";
-				}else{
-					$("#registration input[name=username]").focus();
-					alert(data);
+		jQuery.extend(jQuery.validator.messages, {
+    		required: "This field is required.<br>",
+    		number: "Please enter a valid number.",
+    		max: jQuery.validator.format("Please enter a value length 13."),
+    		min: jQuery.validator.format("Please enter a value length 13.")
+    	});
+		$('#registration').validate({
+			debug: true
+		});
+		if($('#registration').valid()){
+			var xmlhttp=new XMLHttpRequest(); 
+			var username=encodeURIComponent($("#registration input[name=username]").val());
+			var password=encodeURIComponent($("#registration input[name=password]").val());
+			var name=encodeURIComponent($("#registration input[name=name]").val());
+			var surname=encodeURIComponent($("#registration input[name=surname]").val());
+			var emso=encodeURIComponent($("#registration input[name=emso]").val());
+			var parameters="username="+username+"&password="+password+"&name="+name+"&surname="+surname+"&emso="+emso;
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+					var data=JSON.parse(xmlhttp.responseText);
+					if(data==="1"){
+						alert("Application was succesfull. Once admin activate this account, you will be able to login.")
+						window.location.href="web_login.php";
+					}else{
+						$("#registration input[name=username]").focus();
+						alert(data);
+					}
 				}
 			}
+			xmlhttp.open("POST","ajax/ajax_registration.php",true);
+			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xmlhttp.send(parameters);
+			
 		}
-		xmlhttp.open("POST","ajax/ajax_registration.php",true);
-		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.send(parameters);
+		/*
+		$('form').submit();*/
 	});
 	$('#return_back').on('click',function(){
 		window.location.href="web_login.php";
