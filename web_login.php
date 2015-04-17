@@ -7,7 +7,7 @@ if(isset($_POST['submit'])){
 		echo '<script>alert("'.$error_message.'"); window.location.href="web_login.php"; </script>';
 		exit();
 	}else{
-		$value='SELECT Name FROM Users WHERE Username="'.mysqli_real_escape_string($conn,$_POST["username"]).'" AND Password="'.sha1($_POST["password"]).'" AND Checked=1;';
+		$value='SELECT Name,Username FROM Users WHERE Username="'.mysqli_real_escape_string($conn,$_POST["username"]).'" AND Password="'.sha1($_POST["password"]).'" AND Checked=1;';
 		$rs=$conn->query($value);
 		if($rs===false){
 			echo '<script>alert("Wrong SQL: '.$conn->error.'"); window.location.href="web_login.php"; </script>';
@@ -17,6 +17,7 @@ if(isset($_POST['submit'])){
 				echo '<script>alert("We were unable to verify your login. Either your login information was entered incorrectly, or the account system is currently unavailable."); window.location.href="web_login.php"; </script>';
 			}else{
 				$_SESSION['user']=$arr[0]['Name'];
+				$_SESSION['username']=$arr[0]['Username'];
 				echo '<script>window.location.href="web_first.php"; </script>';
 				exit();
 			}			
@@ -33,8 +34,7 @@ if(isset($_POST['submit'])){
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script><!-- jquery-->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" /><!-- jquery ui-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script><!-- jquery ui-->
-	<link rel="stylesheet" href="include/jquery-ui/jquery-ui.css" /><!-- jquery ui with css-->
-	<script src="include/jquery-ui/jquery-ui.min.js"></script><!-- jquery ui with css-->
+	
 </head>
 <body>
 <div class="container">
