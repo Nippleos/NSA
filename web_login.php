@@ -7,7 +7,7 @@ if(isset($_POST['submit'])){
 		echo '<script>alert("'.$error_message.'"); window.location.href="web_login.php"; </script>';
 		exit();
 	}else{
-		$value='SELECT Name,Username FROM Users WHERE Username="'.mysqli_real_escape_string($conn,$_POST["username"]).'" AND Password="'.sha1($_POST["password"]).'" AND Checked=1;';
+		$value='SELECT Name,Username,StatusID FROM Users WHERE Username="'.mysqli_real_escape_string($conn,$_POST["username"]).'" AND Password="'.sha1($_POST["password"]).'" AND Checked=1;';
 		$rs=$conn->query($value);
 		if($rs===false){
 			echo '<script>alert("Wrong SQL: '.$conn->error.'"); window.location.href="web_login.php"; </script>';
@@ -18,6 +18,7 @@ if(isset($_POST['submit'])){
 			}else{
 				$_SESSION['user']=$arr[0]['Name'];
 				$_SESSION['username']=$arr[0]['Username'];
+				$_SESSION['status']=$arr[0]['StatusID'];
 				echo '<script>window.location.href="web_first.php"; </script>';
 				exit();
 			}			

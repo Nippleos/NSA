@@ -2,6 +2,7 @@
 	session_start();
 	if(isset($_SESSION['user'])){
 		include 'include/connect_database.php';
+		echo '<div id="session_info" hidden><p id="p_username">'.$_SESSION["username"].'</p><p id="p_statusid">'.$_SESSION["status"].'</p></div>';
 	}else{
 		header('Location:web_login.php');
 		exit();
@@ -32,9 +33,9 @@
 					<li><a href="#">Page 1</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> Requests</a></li>
+					<li><a id="glyphicon-bookmark" href="#"><span class="glyphicon glyphicon-bookmark"></span> Requests</a></li>
 					<li><a id="glyphicon-registration-mark" href="#"><span class="glyphicon glyphicon-registration-mark"></span> New users</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
+					<li><a id="glyphicon-user" href="#"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
 					<li><a id="logout" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				</ul>
 			</div>

@@ -6,25 +6,14 @@
 	}
 	include '/../include/connect_database.php';
 	if($_POST['name']==='get_all'){
-		$value='SELECT Username FROM Users WHERE Username="'.$_SESSION["user"].'" AND Checked=1 AND UPPER(Type)="ADMIN";';
+		$value='SELECT * FROM Users WHERE Checked=0;';
 		$rs=$conn->query($value);
 		if($rs===false){
 			echo '0';
 		}else{
 			$arr=$rs->fetch_all(MYSQLI_ASSOC);
-			if(count($arr)<1){
-				$value='SELECT * FROM Users WHERE Username="'.$_SESSION["user"].'" AND Checked=1;';
-				$rs=$conn->query($value);
-				$arr=$rs->fetch_all(MYSQLI_ASSOC);
-				echo json_encode(array("user"=>$arr[0]));
-				return;
-			};
-			$value='DELETE FROM Users WHERE CURRENT_DATE-Datum>7;';
-			$rs=$conn->query($value);
-			$value='SELECT * FROM Users WHERE Username NOT LIKE "'.$_SESSION["user"].'";';
-			$rs=$conn->query($value);
-			if($rs===false){echo 0;return;}else $arr=$rs->fetch_all(MYSQLI_ASSOC);
-			echo json_encode(array('admin',$arr));
+			if(count($arr)<1){echo json_encode(array("prazno"=>"There are no new users."));return;}
+			echo json_encode($arr);
 		}
 	}else if($_POST['name']==='removeuser'){
 		$value='DELETE FROM Users WHERE UserID='.$_POST["id"].';';

@@ -2,19 +2,25 @@
 $('#logout').on('click',function(){
 	document.location = 'web_logout.php';
 });
-
+generally();
 function generally(){
-	
+	if($('#session_info #p_statusid').text()<3){
+
+	}else{
+		$('#glyphicon-registration-mark').remove();
+		$('#glyphicon-bookmark').remove();
+	}
 }
 
 $('#glyphicon-registration-mark').on('click',function(){
 	var xmlhttp=new XMLHttpRequest();
-	var parameters="name=repair";
+	var parameters="name=get_all&userid="+$('#session_info #p_statusid').text();
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var data=JSON.parse(xmlhttp.responseText);
-			alert('Uspešna sprememba');
-			
+			if(data===''){
+
+			}			
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_new_users.php",true);
