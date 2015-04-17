@@ -12,7 +12,7 @@
 			echo '0';
 		}else{
 			$arr=$rs->fetch_all(MYSQLI_ASSOC);
-			if(count($arr)<1){echo json_encode(array("prazno"=>"There are no new users."));return;}
+			if(count($arr)<1){echo json_encode(array("empty"=>"There are no new users requests."));return;}
 			echo json_encode($arr);
 		}
 	}else if($_POST['name']==='removeuser'){
