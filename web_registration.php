@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" /><!-- jquery ui-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script><!-- jquery ui-->
 	
-	<script src="include/jquery-ui/jquery-ui.min.js"></script><!-- jquery ui with css-->
+	
 </head>
 
 <body>
