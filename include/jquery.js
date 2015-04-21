@@ -25,7 +25,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 				$('#new_users_table').append('<th>'+data['empty']+'</th>');
 			}
 			$.each(data,function(key,value){		
-				$('#new_users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td><input type="checkbox" name="" value=""></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
+				$('#new_users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td><input type="checkbox" name="hmm" value="'+value["UserID"]+'"></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
 				$('#glyphicon-remove'+value["UserID"]).on('click',function(){
 					var id=$(this).attr('id').replace('glyphicon-remove','');
 					var xmlhttp=new XMLHttpRequest();
@@ -43,8 +43,28 @@ $('#glyphicon-registration-mark').on('click',function(){
 					xmlhttp.send(parameters);
 				});
 			});
-
-			$('#new_users_table').append('<tr><td><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+			$('#new_users_table').append('<tr id="new_users_lastrow"><td><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+			$('#new_users_lastrow #glyphicon-trash').on('click',function(){
+				var vsi=[];
+				$('#new_users_table input[type=checkbox]:checked').each(function(){
+					vsi.push($(this).val());
+				});
+				var xmlhttp=new XMLHttpRequest();
+				var parameters="name=removeusers&users="+JSON.stringify(vsi);
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+						var data=JSON.parse(xmlhttp.responseText);
+						if(data===1){
+							$.each(vsi,function(key,value){
+								$('#new_users_tr'+value).remove();
+							});
+						}
+					}
+				}
+				xmlhttp.open("POST","ajax/ajax_new_users.php",true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(parameters);
+			});
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_new_users.php",true);

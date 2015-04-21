@@ -20,8 +20,8 @@
 		$rs=$conn->query($value);
 		if($rs===false)echo '0';else echo '1';
 	}else if($_POST['name']==='removeusers'){
-		foreach ($_POST as $key => $value) {
-			$value='DELETE FROM Users WHERE UserID=';
+		foreach (json_decode($_POST['users']) as $key => $value) {
+			$value='DELETE FROM Users WHERE UserID='.$value.';';
 			$rs=$conn->query($value);
 			if($rs===false){echo '0';return;}
 		}
