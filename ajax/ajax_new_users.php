@@ -19,6 +19,13 @@
 		$value='DELETE FROM Users WHERE UserID='.$_POST["id"].';';
 		$rs=$conn->query($value);
 		if($rs===false)echo '0';else echo '1';
+	}else if($_POST['name']==='removeusers'){
+		foreach ($_POST as $key => $value) {
+			$value='DELETE FROM Users WHERE UserID=';
+			$rs=$conn->query($value);
+			if($rs===false){echo '0';return;}
+		}
+		echo '1';
 	}else if($_POST['name']==='checkuser'){
 		$value='UPDATE USERS SET Checked=1 WHERE UserID='.$_POST["id"].';';
 		$rs=$conn->query($value);
