@@ -25,8 +25,26 @@ $('#glyphicon-registration-mark').on('click',function(){
 				$('#new_users_table').append('<th>'+data['empty']+'</th>');
 			}
 			$.each(data,function(key,value){		
-				$('#new_users_table').append('<tr><td><input type="checkbox" name="" value=""></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
+				$('#new_users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td><input type="checkbox" name="" value=""></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
+				$('#glyphicon-remove'+value["UserID"]).on('click',function(){
+					var id=$(this).attr('id').replace('glyphicon-remove','');
+					var xmlhttp=new XMLHttpRequest();
+					var parameters="name=removeuser&id="+id;
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200){
+							var data=JSON.parse(xmlhttp.responseText);
+							if(data===1){
+								$('#new_users_tr'+id).remove();
+							}
+						}
+					}
+					xmlhttp.open("POST","ajax/ajax_new_users.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);
+				});
 			});
+
+			$('#new_users_table').append('<tr><td><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_new_users.php",true);
