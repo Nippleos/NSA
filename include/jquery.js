@@ -24,14 +24,18 @@ $('#glyphicon-registration-mark').on('click',function(){
 				$('#new_users_table').empty();
 				$('#new_users_table').append('<th>'+data['empty']+'</th>');
 			}
-			$.each(data,function(key,value){
-				$('#new_users_table').append('<tr><td><input type="checkbox" name="" value=""></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td>igrače</td></tr>');
-			});		
+			$.each(data,function(key,value){		
+				$('#new_users_table').append('<tr><td><input type="checkbox" name="" value=""></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
+			});
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_new_users.php",true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send(parameters);
+});
+
+$('').on('click',function(){
+	
 });
 
 //$('#new_users_table').append();

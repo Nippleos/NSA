@@ -68,8 +68,6 @@
 			xmlhttp.send(parameters);
 			
 		}
-		/*
-		$('form').submit();*/
 	});
 	$('#return_back').on('click',function(){
 		window.location.href="web_login.php";
