@@ -11,8 +11,12 @@ function generally(){ //check user status
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState==4 && xmlhttp.status==200){
 				var data=JSON.parse(xmlhttp.responseText);
-				if(data>0){
+				if(data>0 && data<100){
+					$('.numberCircle').css('width','15px');
 					$('#glyphicon-registration-mark').append('<div class="numberCircle">'+data+'</div>');
+				}else if(data>100){
+					$('#glyphicon-registration-mark').append('<div class="numberCircle">+100</div>');
+					$('.numberCircle').css({'width':'30px'});					
 				}
 			}
 		}
@@ -87,7 +91,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 					xmlhttp.send(parameters);
 				});
 			});
-			$('#new_users_table').append('<tr id="new_users_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a> Delete requests <a id="glyphicon-ok"><span class="glyphicon glyphicon-ok"></span></a> Confirm requests</td></tr>');
+			$('#new_users_table').append('<tr id="new_users_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete requests </i><a id="glyphicon-ok"><span class="glyphicon glyphicon-ok"></span></a><i> Confirm requests</i></td></tr>');
 			$('#new_users_lastrow input[type=checkbox]').on('click',function(){
 				if($('#new_users_lastrow input[type=checkbox]:checked').length){
 					$('#new_users_table td input[name=hmm]').each(function(){

@@ -1,8 +1,13 @@
 .numberCircle {
-
-	-moz-border-radius: 30px;
-	border-radius: 30px;
+	display:inline-block;
+	margin-left:2px;
+    height:15px;
+    width:15px;
+    line-height: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 	background-color: red;
 	color: white;
 	text-align: center;
+	font-size:0.8em;
 }
