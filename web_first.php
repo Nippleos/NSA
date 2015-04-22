@@ -48,9 +48,18 @@
 		</div>
 		
 		<div class="content1" style="display:none">
+			
+		</div>
+		<div class="content2" style="display:none">
+			
+		</div>
+		<div class="content3" style="display:none">
 			<div class="table-responsive">
 				<table class="table" id="new_users_table">				
 			</table>
+		</div>
+		<div class="content4" style="display:none">
+			
 		</div>
 	</div>	
 	</div>

@@ -6,44 +6,57 @@ generally();
 function generally(){ //check user status
 	if($('#session_info #p_statusid').text()<3){
 		//check how much new users are here
-		var xmlhttp=new XMLHttpRequest();
-		var parameters="name=countusers";
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState==4 && xmlhttp.status==200){
-				var data=JSON.parse(xmlhttp.responseText);
-				if(data>0 && data<100){
-					$('.numberCircle').css('width','15px');
-					$('#glyphicon-registration-mark').append('<div class="numberCircle">'+data+'</div>');
-				}else if(data>100){
-					$('#glyphicon-registration-mark').append('<div class="numberCircle">+100</div>');
-					$('.numberCircle').css({'width':'30px'});					
-				}
-			}
-		}
-		xmlhttp.open("POST","ajax/ajax_new_users.php",true);
-		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.send(parameters);
+		count_new_users();
 	}else{
 		$('#glyphicon-registration-mark').remove();
 		$('#glyphicon-bookmark').remove();
 		$('#glyphicon-list-alt').remove(); //assigneemnts
 	}
 }
+function count_new_users(){
+	var xmlhttp=new XMLHttpRequest();
+	var parameters="name=countusers";
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState==4 && xmlhttp.status==200){
+			var data=JSON.parse(xmlhttp.responseText);
+			if(data>0 && data<100){				
+				$('.numberCircle').remove();
+				$('#glyphicon-registration-mark').append('<div class="numberCircle">'+data+'</div>');
+				$('.numberCircle').css('width','15px');
+			}else if(data>100){
+				$('.numberCircle').remove();
+				$('#glyphicon-registration-mark').append('<div class="numberCircle">+100</div>');
+				$('.numberCircle').css({'width':'30px'});					
+			}else{
+				$('.numberCircle').remove();
+			}
+		}
+	}
+	xmlhttp.open("POST","ajax/ajax_new_users.php",true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(parameters);
+}
 function hide_container(){
-	$('.content1').hide(); //table of new users requests
+	$('.content1').hide(); //exams
+	$('.content2').hide(); //requests
+	$('.content3').hide(); //table of new users requests
+	$('.content4').hide(); //settings
 }
 
 $('#glyphicon-list-alt').on('click',function(){
 	hide_container();
+	$('.content1').show();
+	$('').append();
 });
 
 $('#glyphicon-bookmark').on('click',function(){
 	hide_container();
+	$('.content2').show();
 });
 
 $('#glyphicon-registration-mark').on('click',function(){
 	hide_container();
-	$('.content1').show();
+	$('.content3').show();
 	var xmlhttp=new XMLHttpRequest();
 	var parameters="name=get_all&userid="+$('#session_info #p_statusid').text();
 	xmlhttp.onreadystatechange=function(){
@@ -54,6 +67,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 			if("empty" in data){
 				$('#new_users_table').empty();
 				$('#new_users_table').append('<th>'+data['empty']+'</th>');
+				$('.numberCircle').remove();
 				return;
 			}
 			$.each(data,function(key,value){		
@@ -67,6 +81,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 							var data=JSON.parse(xmlhttp.responseText);
 							if(data===1){
 								$('#new_users_tr'+id).remove();
+								count_new_users();
 							}
 						}
 					}
@@ -83,6 +98,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 							var data=JSON.parse(xmlhttp.responseText);
 							if(data===1){
 								$('#new_users_tr'+id).remove();
+								count_new_users();
 							}
 						}
 					}
@@ -117,6 +133,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 							$.each(vsi,function(key,value){
 								$('#new_users_tr'+value).remove();
 							});
+							count_new_users();
 						}
 					}
 				}
@@ -138,6 +155,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 							$.each(vsi,function(key,value){
 								$('#new_users_tr'+value).remove();
 							});
+							count_new_users();
 						}
 					}
 				}
@@ -154,6 +172,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 
 $('#glyphicon-user').on('click',function(){
 	hide_container();
+	$('.content4').show();
 });
 
 $('').on('click',function(){
