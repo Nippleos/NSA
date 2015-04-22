@@ -60,7 +60,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 					xmlhttp.send(parameters);
 				});
 			});
-			$('#new_users_table').append('<tr id="new_users_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a> Delete requests <a><span class="glyphicon glyphicon-ok"></span></a> Confirm requests</td></tr>');
+			$('#new_users_table').append('<tr id="new_users_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a> Delete requests <a id="glyphicon-ok"><span class="glyphicon glyphicon-ok"></span></a> Confirm requests</td></tr>');
 			$('#new_users_lastrow input[type=checkbox]').on('click',function(){
 				if($('#new_users_lastrow input[type=checkbox]:checked').length){
 					$('#new_users_table td input[name=hmm]').each(function(){
@@ -74,11 +74,32 @@ $('#glyphicon-registration-mark').on('click',function(){
 			});
 			$('#new_users_lastrow #glyphicon-trash').on('click',function(){
 				var vsi=[];
-				$('#new_users_table input[type=checkbox]:checked').each(function(){
+				$('#new_users_table input[name=hmm]:checked').each(function(){
 					vsi.push($(this).val());
 				});
 				var xmlhttp=new XMLHttpRequest();
 				var parameters="name=removeusers&users="+JSON.stringify(vsi);
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+						var data=JSON.parse(xmlhttp.responseText);
+						if(data===1){
+							$.each(vsi,function(key,value){
+								$('#new_users_tr'+value).remove();
+							});
+						}
+					}
+				}
+				xmlhttp.open("POST","ajax/ajax_new_users.php",true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(parameters);
+			});
+			$('#new_users_lastrow #glyphicon-ok').on('click',function(){
+				var vsi=[];
+				$('#new_users_table input[name=hmm]:checked').each(function(){
+					vsi.push($(this).val());
+				});
+				var xmlhttp=new XMLHttpRequest();
+				var parameters="name=checkusers&users="+JSON.stringify(vsi);
 				xmlhttp.onreadystatechange=function(){
 					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 						var data=JSON.parse(xmlhttp.responseText);

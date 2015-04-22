@@ -30,6 +30,13 @@
 		$value='UPDATE USERS SET Checked=1 WHERE UserID='.$_POST["id"].';';
 		$rs=$conn->query($value);
 		if($rs===false)echo '0';else echo '1';
+	}else if($_POST['name']==='checkusers'){
+		foreach (json_decode($_POST['users']) as $key => $value) {
+			$value='UPDATE USERS SET Checked=1 WHERE UserID='.$value.';';
+			$rs=$conn->query($value);
+			if($rs===false){echo '0';return;}
+		}
+		echo '1';
 	}else if($_POST['name']==='repair'){
 		if(strlen($_POST['pass'])>0)$value='UPDATE Users SET Password="'.sha1($_POST["pass"]).'", Name="'.$_POST["name1"].'", Username="'.$_POST["uname"].'",Surname="'.$_POST["sname"].'",Contact="'.$_POST["contact"].'" WHERE UserID='.$_POST["id"].';';
 		else $value='UPDATE Users SET Name="'.$_POST["name1"].'", Username="'.$_POST["uname"].'",Surname="'.$_POST["sname"].'",Contact="'.$_POST["contact"].'" WHERE UserID='.$_POST["id"].';';
