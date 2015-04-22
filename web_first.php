@@ -30,9 +30,10 @@
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">Page 1</a></li>
+					<!--<li><a href="#">Page 1</a></li>-->
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right">				
+					<li><a id="glyphicon-list-alt" href="#"><span class="glyphicon glyphicon-list-alt"></span> Exams</a></li>
 					<li><a id="glyphicon-bookmark" href="#"><span class="glyphicon glyphicon-bookmark"></span> Requests</a></li>
 					<li><a id="glyphicon-registration-mark" href="#"><span class="glyphicon glyphicon-registration-mark"></span> New users</a></li>
 					<li><a id="glyphicon-user" href="#"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
@@ -45,9 +46,9 @@
 		<div class="jumbotron">
 		</div>
 		
-		<div class="row">
-		<div class="table-responsive">
-			<table class="table" id="new_users_table">				
+		<div class="content1" style="display:none">
+			<div class="table-responsive">
+				<table class="table" id="new_users_table">				
 			</table>
 		</div>
 	</div>	
