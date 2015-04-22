@@ -12,7 +12,7 @@ function generally(){ //check user status
 			if(xmlhttp.readyState==4 && xmlhttp.status==200){
 				var data=JSON.parse(xmlhttp.responseText);
 				if(data>0){
-					$('#glyphicon-registration-mark').append(data);
+					$('#glyphicon-registration-mark').append('<div class="numberCircle">'+data+'</div>');
 				}
 			}
 		}
