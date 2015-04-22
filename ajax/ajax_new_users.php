@@ -5,7 +5,11 @@
 		exit();
 	}
 	include '/../include/connect_database.php';
-	if($_POST['name']==='get_all'){
+	if($_POST['name']==='countusers'){
+		$value='SELECT COUNT(UserID) AS Number FROM Users WHERE Checked=0;';
+		$rs=$conn->query($value);
+		if($rs===false)echo '0';else{$arr=$rs->fetch_all(MYSQLI_ASSOC); echo $arr[0]['Number'];}
+	}else if($_POST['name']==='get_all'){
 		$value='SELECT * FROM Users WHERE Checked=0;';
 		$rs=$conn->query($value);
 		if($rs===false){

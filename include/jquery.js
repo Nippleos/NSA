@@ -5,7 +5,20 @@ $('#logout').on('click',function(){
 generally();
 function generally(){ //check user status
 	if($('#session_info #p_statusid').text()<3){
-
+		//check how much new users are here
+		var xmlhttp=new XMLHttpRequest();
+		var parameters="name=countusers";
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState==4 && xmlhttp.status==200){
+				var data=JSON.parse(xmlhttp.responseText);
+				if(data>0){
+					$('#glyphicon-registration-mark').append(data);
+				}
+			}
+		}
+		xmlhttp.open("POST","ajax/ajax_new_users.php",true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(parameters);
 	}else{
 		$('#glyphicon-registration-mark').remove();
 		$('#glyphicon-bookmark').remove();
