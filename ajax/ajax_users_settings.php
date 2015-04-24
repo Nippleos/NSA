@@ -1,10 +1,12 @@
 <?php
 	session_start();
+	print_r($_POST);
 	if(!(isset($_SESSION['user']))){
 		header('Location:web_login.php');
 		exit();
 	}
-	if($_POST['name']==='getall'){
+	include '/../include/connect_database.php';
+	if($_POST['name']==='get_all'){
 		$value='SELECT * FROM Users WHERE Checked=1;';
 		$rs=$conn->query($value);
 		if($rs===false){
