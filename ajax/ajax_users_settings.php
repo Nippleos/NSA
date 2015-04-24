@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	print_r($_POST);
 	if(!(isset($_SESSION['user']))){
 		header('Location:web_login.php');
 		exit();
