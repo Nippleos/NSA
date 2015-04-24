@@ -59,7 +59,9 @@
 			</table>
 		</div>
 		<div class="content4" style="display:none">
-			
+			<div class="table-responsive">
+				<table class="table" id="users_table">				
+			</table>
 		</div>
 	</div>	
 	</div>

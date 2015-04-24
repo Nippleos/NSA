@@ -173,6 +173,27 @@ $('#glyphicon-registration-mark').on('click',function(){
 $('#glyphicon-user').on('click',function(){
 	hide_container();
 	$('.content4').show();
+	var xmlhttp=new XMLHttpRequest();
+	var parameters="name=get_all&userid="+$('#session_info #p_statusid').text();
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var data=JSON.parse(xmlhttp.responseText);
+			$('#users_table').empty();
+			$('#users_table').append('<tr><th></th><th>User ID</th><th>Username</th><th>Name</th><th>Surname</th><th>Emso</th><th>Status ID</th><th>Toys</th></tr>');
+			if("empty" in data){
+				$('#users_table').empty();
+				$('#users_table').append('<th>'+data['empty']+'</th>');
+				return;
+			}
+			$.each(data,function(key,value){
+				$('#users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td><input type="checkbox" name="hmm" value="'+value["UserID"]+'"></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-plus'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-plus"></span></a></td></tr>');
+				
+			});			
+		}
+	}
+	xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(parameters);
 });
 
 $('').on('click',function(){
