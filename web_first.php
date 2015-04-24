@@ -55,16 +55,15 @@
 		</div>
 		<div class="content3" style="display:none">
 			<div class="table-responsive">
-				<table class="table" id="new_users_table">				
-			</table>
+				<table class="table" id="new_users_table"></table>
+			</div>
 		</div>
-		<div class="content4" style="display:none">
+		<div class="content4" style="">
 			<div class="table-responsive">
-				<table class="table" id="users_table">				
-			</table>
+				<table class="table" id="users_table"></table>
+			</div>
 		</div>
 	</div>	
-	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="include/jquery.js"></script>

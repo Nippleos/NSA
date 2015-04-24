@@ -5,8 +5,8 @@ $('#logout').on('click',function(){
 generally();
 function generally(){ //check user status
 	if($('#session_info #p_statusid').text()<3){
-		//check how much new users are here
-		count_new_users();
+		
+		count_new_users();//check how much new users are here
 	}else{
 		$('#glyphicon-registration-mark').remove();
 		$('#glyphicon-bookmark').remove();
@@ -188,7 +188,19 @@ $('#glyphicon-user').on('click',function(){
 			$.each(data,function(key,value){
 				$('#users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td><input type="checkbox" name="hmm" value="'+value["UserID"]+'"></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-plus'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-plus"></span></a></td></tr>');
 				
-			});			
+			});
+			$('#users_table').append('<tr id="users_table_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete requests </i><a id="glyphicon-ok"><span class="glyphicon glyphicon-ok"></span></a><i> Confirm requests</i></td></tr>');
+			$('#users_table_lastrow input[type=checkbox]').on('click',function(){
+				if($('#users_table_lastrow input[type=checkbox]:checked').length){
+					$('#users_table td input[name=hmm]').each(function(){
+						$(this).prop('checked', true);
+					});
+				}else{
+					$('#users_table td input[name=hmm]').each(function(){
+						$(this).prop('checked', false);
+					});
+				}
+			});		
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
