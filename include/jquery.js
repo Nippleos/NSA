@@ -207,7 +207,9 @@ $('#glyphicon-user').on('click',function(){
 					xmlhttp.send(parameters);
 				});
 				$('#users_table #glyphicon-edit'+value["UserID"]).on('click',function(){
-					bootbox.dialog({
+					
+					bootbox.alert("Hello");
+					/*bootbox.dialog({
 			                title: "This is a form in a modal.",
 			                message: '<div class="row">  ' +
 			                    '<div class="col-md-12"> ' +
@@ -235,12 +237,11 @@ $('#glyphicon-user').on('click',function(){
 			                        callback: function () {
 			                            var name = $('#name').val();
 			                            var answer = $("input[name='awesomeness']:checked").val()
-			                            Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
 			                        }
 			                    }
 			                }
 			            }
-			        );
+			        );*/
 
 					/*var xmlhttp=new XMLHttpRequest();
 					var parameters="name=update_user&userid="+value["UserID"];
