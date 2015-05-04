@@ -15,6 +15,7 @@
 	<title>Nippleos-ERS</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="include/bootbox.min.js"></script><!-- dialog etc-->
 	<link rel="stylesheet" type="text/css" href="css/first.css" />
 </head>
 <body>

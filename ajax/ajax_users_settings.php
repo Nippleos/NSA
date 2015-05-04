@@ -22,7 +22,7 @@
 	}else if($_POST['name']==='remove_user'){
 		$value='DELETE FROM Users WHERE UserID='.$_POST["userid"].';';
 		$rs=$conn->query($value);
-		if($rs===false)echo '0'; else echo '1';
+		if($rs===false)echo '0'; else echo $_POST["userid"];
 	}
 
 

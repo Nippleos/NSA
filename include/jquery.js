@@ -187,20 +187,18 @@ $('#glyphicon-user').on('click',function(){
 			}
 			$.each(data,function(key,value){
 				if(value["Username"]===$('#session_info #p_username').text()){
-					$('#users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td style="text-align:center"><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					$('#users_table').append('<tr id="user_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 				}else{
-					$('#users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					$('#users_table').append('<tr id="user_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a> <a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
 				}
 				$('#users_table #glyphicon-remove'+value["UserID"]).on('click',function(){
-					alert('removeusers');
 					var xmlhttp=new XMLHttpRequest();
 					var parameters="name=remove_user&userid="+value["UserID"];
 					xmlhttp.onreadystatechange=function(){
 						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 							var data=JSON.parse(xmlhttp.responseText);
-							alert(data);
-							if(data===1){
-								$(this).remove();
+							if(data!=0){
+								$('#users_table #user_tr'+data).remove();
 							}
 						}
 					}
@@ -208,9 +206,56 @@ $('#glyphicon-user').on('click',function(){
 					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					xmlhttp.send(parameters);
 				});
+				$('#users_table #glyphicon-edit'+value["UserID"]).on('click',function(){
+					bootbox.dialog({
+			                title: "This is a form in a modal.",
+			                message: '<div class="row">  ' +
+			                    '<div class="col-md-12"> ' +
+			                    '<form class="form-horizontal"> ' +
+			                    '<div class="form-group"> ' +
+			                    '<label class="col-md-4 control-label" for="name">Name</label> ' +
+			                    '<div class="col-md-4"> ' +
+			                    '<input id="name" name="name" type="text" placeholder="Your name" class="form-control input-md"> ' +
+			                    '<span class="help-block">Here goes your name</span> </div> ' +
+			                    '</div> ' +
+			                    '<div class="form-group"> ' +
+			                    '<label class="col-md-4 control-label" for="awesomeness">How awesome is this?</label> ' +
+			                    '<div class="col-md-4"> <div class="radio"> <label for="awesomeness-0"> ' +
+			                    '<input type="radio" name="awesomeness" id="awesomeness-0" value="Really awesome" checked="checked"> ' +
+			                    'Really awesome </label> ' +
+			                    '</div><div class="radio"> <label for="awesomeness-1"> ' +
+			                    '<input type="radio" name="awesomeness" id="awesomeness-1" value="Super awesome"> Super awesome </label> ' +
+			                    '</div> ' +
+			                    '</div> </div>' +
+			                    '</form> </div>  </div>',
+			                buttons: {
+			                    success: {
+			                        label: "Save",
+			                        className: "btn-success",
+			                        callback: function () {
+			                            var name = $('#name').val();
+			                            var answer = $("input[name='awesomeness']:checked").val()
+			                            Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+			                        }
+			                    }
+			                }
+			            }
+			        );
+
+					/*var xmlhttp=new XMLHttpRequest();
+					var parameters="name=update_user&userid="+value["UserID"];
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+							var data=JSON.parse(xmlhttp.responseText);
+							
+						}
+					}
+					xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);*/
+				});
 			});
-			$('#users_table').append('<tr id="users_table_lastrow"><td colspan="8"></td></tr>');
-			
+			$('#users_table').append('<tr id="users_table_lastrow"><td colspan="8"></td></tr>');			
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
