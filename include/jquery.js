@@ -46,12 +46,6 @@ function hide_container(){
 	$('.content4').hide(); //settings
 }
 
-$('#glyphicon-list-alt').on('click',function(){
-	hide_container();
-	$('.content1').show();
-	$('').append();
-});
-
 $('#glyphicon-bookmark').on('click',function(){
 	hide_container();
 	$('.content2').show();
@@ -304,41 +298,7 @@ $('#glyphicon-user').on('click',function(){
 $('#glyphicon-list-alt').on('click',function(){
 	hide_container();
 	$('.content1').show();
-	/********************** creating new exams ********************/
-	$('#first_choose_of_exams_list').on('click',function(){
-		$('#exams_list_group').hide();
-		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
-		$('.content1').append('<h3>New exams</h3>');
-		$('.content1 #home_button').on('click',function(){
-			$('.content1 h3').remove();
-			$(this).remove();
-			$('#new_exams_div').remove();
-			$('.content1 #exams_list_group').show();
-		});
-		/* check if prof. created any collection */
-		var xmlhttp=new XMLHttpRequest();
-		var parameters="name=checkcollections&userid="+$('#session_info #p_userid').text();
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState==4 && xmlhttp.status==200){
-				var data=JSON.parse(xmlhttp.responseText);
-				$('.content1').append('<div id="new_exams_div"><table id="new_exams_table"></table></div>')
-				if("empty" in data){
-					$('#new_exams_table').empty();
-					$('#new_exams_table').append('<tr><th>'+data["empty"]+'</th></tr>');
-					$('#new_exams_table').append('<tr id="new_exams_lastrow"><td><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td></tr>')
-					return;
-				}
-			}
-		}
-		xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
-		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.send(parameters);
-		$('#new_exams_table #new_exams_lastrow #glyphicon-book').on('click',function(){
-			new_collection_dialog();
-		});
-		/*check if prof. created any collection */
-	});
-	/********************** showing exams ********************/
+	$('#exams_list_group').show();
 	$('#second_choose_of_exams_list').on('click',function(){
 		$('#exams_list_group').hide();
 		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
@@ -361,9 +321,49 @@ $('#glyphicon-list-alt').on('click',function(){
 		});
 	});
 });
+/********************** creating new exams ********************/
+$('#first_choose_of_exams_list').on('click',function(){
+	$('#exams_list_group').hide();
+	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+	$('.content1').append('<h3>New exams</h3>');
+	$('.content1 #home_button').on('click',function(){
+		$('.content1 h3').remove();
+		$(this).remove();
+		$('#new_exams_div').remove();
+		$('.content1 #exams_list_group').show();
+		$('#new_exams_table').remove();
+	});
+	/* check if prof. created any collection */
+	var xmlhttp=new XMLHttpRequest();
+	var parameters="name=checkcollections&userid="+$('#session_info #p_userid').text();
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState==4 && xmlhttp.status==200){
+			var data=JSON.parse(xmlhttp.responseText);
+			$('.content1').append('<div id="new_exams_div"><table id="new_exams_table"></table></div>')
+			if("empty" in data){
+				$('#new_exams_table').empty();
+				$('#new_exams_table').append('<tr><th>'+data["empty"]+'</th></tr>');
+				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td></tr>')
+				$('#new_exams_table #new_exams_lastrow #glyphicon-book').on('click',function(){
+					new_collection_dialog();
+				});
+				return;
+			}else{
+				alert('kolikkkokrat?');
+			}
+		}
+	}
+	xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(parameters);
+	
+	/*check if prof. created any collection */
+});
+/********************** showing exams ********************/
+
 
 function new_collection_dialog(){
-	var a=bootbox.dialog({
+	bootbox.dialog({
 	title: "Setting up new collection",
 	onEscape: function(){},
 	backdrop: true,
@@ -391,7 +391,7 @@ function new_collection_dialog(){
 			className: "btn-success",
 			callback: function () {
 				var xmlhttp=new XMLHttpRequest();
-				var parameters="name=createcollection&userid="+$('#session_info #p_userid').text()+"&name="+$('.col-md-4 input[id=coll_name]').val();
+				var parameters="name=createcollection&userid="+$('#session_info #p_userid').text()+"&coll_name="+$('.col-md-4 input[id=coll_name]').val();
 				xmlhttp.onreadystatechange=function(){
 					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 						var data=JSON.parse(xmlhttp.responseText);

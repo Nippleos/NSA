@@ -5,7 +5,6 @@
 		exit();
 	}
 	include '/../include/connect_database.php';
-	//print_r($_POST);
 	if($_POST['name']==='checkcollections'){
 		$value='SELECT * FROM Collection WHERE UserID="'.$_POST["userid"].'";';
 		$rs=$conn->query($value);
@@ -17,8 +16,7 @@
 			echo json_encode($arr);
 		}
 	}else if($_POST['name']==='createcollection'){
-		print_r($_POST);
-		$value='INSERT INTO Collecdtion VALUES(NULL,"'.$_POST["name"].'","'.$_POST["userid"].'");';
+		$value='INSERT INTO Collection VALUES(NULL,"'.$_POST["coll_name"].'","'.$_POST["userid"].'");';
 		$rs=$conn->query($value);
 		if($rs===false)echo '0'; else echo '1';
 	}
