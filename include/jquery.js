@@ -299,27 +299,7 @@ $('#glyphicon-list-alt').on('click',function(){
 	hide_container();
 	$('.content1').show();
 	$('#exams_list_group').show();
-	$('#second_choose_of_exams_list').on('click',function(){
-		$('#exams_list_group').hide();
-		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
-		$('.content1').append('<h3>List of exams</h3>');
-		$('.content1 #home_button').on('click',function(){
-			$('.content1 h3').remove();
-			$(this).remove();
-			$('.content1 #exams_list_group').show();
-		});
-	});
-	/********************** editing exams ********************/
-	$('#third_choose_of_exams_list').on('click',function(){
-		$('#exams_list_group').hide();
-		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
-		$('.content1').append('<h3>Editing/deleting exams</h3>');
-		$('.content1 #home_button').on('click',function(){
-			$('.content1 h3').remove();
-			$(this).remove();
-			$('.content1 #exams_list_group').show();
-		});
-	});
+	
 });
 /********************** creating new exams ********************/
 $('#first_choose_of_exams_list').on('click',function(){
@@ -349,7 +329,7 @@ $('#first_choose_of_exams_list').on('click',function(){
 				});
 				return;
 			}else{
-				alert('kolikkkokrat?');
+				
 			}
 		}
 	}
@@ -360,7 +340,27 @@ $('#first_choose_of_exams_list').on('click',function(){
 	/*check if prof. created any collection */
 });
 /********************** showing exams ********************/
-
+$('#second_choose_of_exams_list').on('click',function(){
+	$('#exams_list_group').hide();
+	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+	$('.content1').append('<h3>List of exams</h3>');
+	$('.content1 #home_button').on('click',function(){
+		$('.content1 h3').remove();
+		$(this).remove();
+		$('.content1 #exams_list_group').show();
+	});
+});
+/********************** editing exams ********************/
+$('#third_choose_of_exams_list').on('click',function(){
+	$('#exams_list_group').hide();
+	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+	$('.content1').append('<h3>Editing/deleting exams</h3>');
+	$('.content1 #home_button').on('click',function(){
+		$('.content1 h3').remove();
+		$(this).remove();
+		$('.content1 #exams_list_group').show();
+	});
+});
 
 function new_collection_dialog(){
 	bootbox.dialog({
