@@ -238,7 +238,7 @@ $('#glyphicon-user').on('click',function(){
 											'<input id="emso" name="emso" type="text" placeholder="Emšo" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
 										'</div> ' +
 									'</div> '+
-									'<div class="form-group"> ' +
+									'<div class="form-group" id="status_change_div"> ' +
 										'<label class="col-md-4 control-label" for="status">Status</label>'+
 										'<div class="col-md-4"> ' +
 											'<input id="status" name="status" type="text" placeholder="Status" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
@@ -271,7 +271,9 @@ $('#glyphicon-user').on('click',function(){
 							}
 						}
 					});
-
+					if($('#session_info #p_statusid').text()!=1){
+						$('#status_change_div').remove();
+					}
 					/*var xmlhttp=new XMLHttpRequest();
 					var parameters="name=update_user&userid="+value["UserID"];
 					xmlhttp.onreadystatechange=function(){

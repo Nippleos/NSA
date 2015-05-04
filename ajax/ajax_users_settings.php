@@ -6,7 +6,7 @@
 	}
 	include '/../include/connect_database.php';
 	if($_POST['name']==='get_all'){
-		if($_POST['statusid']>2){
+		if($_POST['statusid']>1){
 			$value='SELECT * FROM USERS WHERE Username="'.$_POST["username"].'";';
 		}else{
 			$value='SELECT * FROM Users WHERE Checked=1;';
