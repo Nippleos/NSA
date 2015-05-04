@@ -208,9 +208,10 @@ $('#glyphicon-user').on('click',function(){
 				});
 				$('#users_table #glyphicon-edit'+value["UserID"]).on('click',function(){
 					var id=$(this).attr("id").replace('glyphicon-edit','');
-					bootbox.dialog({
+					var a=bootbox.dialog({
 						title: "Change "+$('#users_table #glyphicon-edit'+id).parent().parent().find("#users_uname").text()+"'s informations",
 						onEscape: function(){},
+						backdrop: true,
 						message: 
 							'<div class="row"><div class="col-md-12"> ' +
 								'<form class="form-horizontal"> ' +
@@ -264,8 +265,20 @@ $('#glyphicon-user').on('click',function(){
 								label: "Save",
 								className: "btn-success",
 								callback: function () {
-									var name = $('#name').val();
-									var answer = $("input[name='awesomeness']:checked").val()
+									var xmlhttp=new XMLHttpRequest();
+									var parameters="name=update_user&userid="+id+"&uname="+$('.col-md-4 input[id=uname]').val()+"&firstname="+$('.col-md-4 input[id=name]').val()+"&surname="+$('.col-md-4 input[id=surname]').val()+"&emso="+$('.col-md-4 input[id=emso]').val()+"&status="+$('.col-md-4 input[id=status]').val()+"&password="+$('.col-md-4 input[id=password]').val();
+									xmlhttp.onreadystatechange=function(){
+										if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+											var data=JSON.parse(xmlhttp.responseText);
+											if(data===1){
+												$('#glyphicon-user').trigger('click');
+												bootbox.hideAll();												
+											}
+										}
+									}
+									xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
+									xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+									xmlhttp.send(parameters);
 									Example.show("Success!");
 								}
 							}
@@ -274,17 +287,7 @@ $('#glyphicon-user').on('click',function(){
 					if($('#session_info #p_statusid').text()!=1){
 						$('#status_change_div').remove();
 					}
-					/*var xmlhttp=new XMLHttpRequest();
-					var parameters="name=update_user&userid="+value["UserID"];
-					xmlhttp.onreadystatechange=function(){
-						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
-							var data=JSON.parse(xmlhttp.responseText);
-							
-						}
-					}
-					xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
-					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-					xmlhttp.send(parameters);*/
+					
 				});
 			});
 			$('#users_table').append('<tr id="users_table_lastrow"><td colspan="8"></td></tr>');			
