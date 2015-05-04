@@ -187,9 +187,9 @@ $('#glyphicon-user').on('click',function(){
 			}
 			$.each(data,function(key,value){
 				if(value["Username"]===$('#session_info #p_username').text()){
-					$('#users_table').append('<tr id="user_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					$('#users_table').append('<tr id="user_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td id="users_uname">'+value["Username"]+'</td><td id="users_name">'+value["Name"]+'</td><td id="users_surname">'+value["Surname"]+'</td><td id="users_emso">'+value["Emso"]+'</td><td id="users_status">'+value["StatusID"]+'</td><td><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 				}else{
-					$('#users_table').append('<tr id="user_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a> <a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
+					$('#users_table').append('<tr id="user_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td id="users_uname">'+value["Username"]+'</td><td id="users_name">'+value["Name"]+'</td><td id="users_surname">'+value["Surname"]+'</td><td id="users_emso">'+value["Emso"]+'</td><td id="users_status">'+value["StatusID"]+'</td><td><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a> <a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
 				}
 				$('#users_table #glyphicon-remove'+value["UserID"]).on('click',function(){
 					var xmlhttp=new XMLHttpRequest();
@@ -207,41 +207,70 @@ $('#glyphicon-user').on('click',function(){
 					xmlhttp.send(parameters);
 				});
 				$('#users_table #glyphicon-edit'+value["UserID"]).on('click',function(){
-					
-					bootbox.alert("Hello");
-					/*bootbox.dialog({
-			                title: "This is a form in a modal.",
-			                message: '<div class="row">  ' +
-			                    '<div class="col-md-12"> ' +
-			                    '<form class="form-horizontal"> ' +
-			                    '<div class="form-group"> ' +
-			                    '<label class="col-md-4 control-label" for="name">Name</label> ' +
-			                    '<div class="col-md-4"> ' +
-			                    '<input id="name" name="name" type="text" placeholder="Your name" class="form-control input-md"> ' +
-			                    '<span class="help-block">Here goes your name</span> </div> ' +
-			                    '</div> ' +
-			                    '<div class="form-group"> ' +
-			                    '<label class="col-md-4 control-label" for="awesomeness">How awesome is this?</label> ' +
-			                    '<div class="col-md-4"> <div class="radio"> <label for="awesomeness-0"> ' +
-			                    '<input type="radio" name="awesomeness" id="awesomeness-0" value="Really awesome" checked="checked"> ' +
-			                    'Really awesome </label> ' +
-			                    '</div><div class="radio"> <label for="awesomeness-1"> ' +
-			                    '<input type="radio" name="awesomeness" id="awesomeness-1" value="Super awesome"> Super awesome </label> ' +
-			                    '</div> ' +
-			                    '</div> </div>' +
-			                    '</form> </div>  </div>',
-			                buttons: {
-			                    success: {
-			                        label: "Save",
-			                        className: "btn-success",
-			                        callback: function () {
-			                            var name = $('#name').val();
-			                            var answer = $("input[name='awesomeness']:checked").val()
-			                        }
-			                    }
-			                }
-			            }
-			        );*/
+					var id=$(this).attr("id").replace('glyphicon-edit','');
+					bootbox.dialog({
+						title: "Change "+$('#users_table #glyphicon-edit'+id).parent().parent().find("#users_uname").text()+"'s informations",
+						onEscape: function(){},
+						message: 
+							'<div class="row"><div class="col-md-12"> ' +
+								'<form class="form-horizontal"> ' +
+									'<div class="form-group"> ' +
+										'<label class="col-md-4 control-label" for="uname">Username</label>' +
+										'<div class="col-md-4"> ' +
+											'<input id="uname" name="uname" type="text" placeholder="Username" value="'+$("#users_table #user_tr"+id+" #users_uname").text()+'" class="form-control input-md">' +
+										'</div> ' +
+									'</div> '+
+									'<div class="form-group"> ' +
+										'<label class="col-md-4 control-label" for="name">Name</label>' +
+										'<div class="col-md-4"> ' +
+											'<input id="name" name="name" type="text" placeholder="Name" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control input-md">'+
+										'</div> ' +
+									'</div> '+
+									'<div class="form-group"> ' +
+										'<label class="col-md-4 control-label" for="surname">Surname</label>'+
+										'<div class="col-md-4"> ' +
+											'<input id="surname" name="surname" type="text" placeholder="Surname" value="'+$("#users_table #user_tr"+id+" #users_surname").text()+'" class="form-control input-md">'+
+										'</div> ' +
+									'</div> '+
+									'<div class="form-group"> ' +
+										'<label class="col-md-4 control-label" for="emso">Emšo</label>'+
+										'<div class="col-md-4"> ' +
+											'<input id="emso" name="emso" type="text" placeholder="Emšo" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
+										'</div> ' +
+									'</div> '+
+									'<div class="form-group"> ' +
+										'<label class="col-md-4 control-label" for="status">Status</label>'+
+										'<div class="col-md-4"> ' +
+											'<input id="status" name="status" type="text" placeholder="Status" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
+										'</div> ' +
+									'</div> '+
+									'<div class="form-group"> ' +
+										'<label class="col-md-4 control-label" for="password">New password</label>'+
+										'<div class="col-md-4"> ' +
+											'<input id="password" name="password" type="text" placeholder="New password" class="form-control input-md">'+
+										'</div> ' +
+									'</div> '+
+								'</form>'+
+							'</div> </div>',
+						buttons: {
+							danger: {
+								label: "Cancel",
+								className: "btn-danger",
+								callback: function() {
+									
+								}
+							},
+							success: {
+								label: "Save",
+								className: "btn-success",
+								callback: function () {
+									var name = $('#name').val();
+									var answer = $("input[name='awesomeness']:checked").val()
+									Example.show("Success!");
+								}
+							}
+						}
+					});
 
 					/*var xmlhttp=new XMLHttpRequest();
 					var parameters="name=update_user&userid="+value["UserID"];

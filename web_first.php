@@ -15,7 +15,6 @@
 	<title>Nippleos-ERS</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<script src="include/bootbox.min.js"></script><!-- dialog etc-->
 	<link rel="stylesheet" type="text/css" href="css/first.css" />
 </head>
 <body>
@@ -68,5 +67,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="include/jquery.js"></script>
+	<script src="include/bootstrap.js"></script>
+	<script src="include/bootbox.min.js"></script><!-- dialog etc-->
 </body>
 </html>
