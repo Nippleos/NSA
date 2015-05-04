@@ -62,7 +62,10 @@
 					<h4 class="list-group-item-heading">Edit exams</h4>
 					<p class="list-group-item-text">Do whatever you want (delete/edit)</p>
 				</a>
-			</div>			
+			</div>
+			<div class="table-responsive">
+				<table class="table" id="new_exams_table"></table>
+			</div>
 		</div>
 		<div class="content2" style="display:none">
 			

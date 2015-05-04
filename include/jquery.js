@@ -298,6 +298,10 @@ $('#glyphicon-user').on('click',function(){
 $('#glyphicon-list-alt').on('click',function(){
 	hide_container();
 	$('.content1').show();
+	$('#new_exams_div').remove();
+	$('#new_exams_table').empty();
+	$('.content1 #home_button').remove();
+	$('.content1 h3').remove();
 	$('#exams_list_group').show();
 	
 });
@@ -311,7 +315,7 @@ $('#first_choose_of_exams_list').on('click',function(){
 		$(this).remove();
 		$('#new_exams_div').remove();
 		$('.content1 #exams_list_group').show();
-		$('#new_exams_table').remove();
+		$('#new_exams_table').empty();
 	});
 	/* check if prof. created any collection */
 	var xmlhttp=new XMLHttpRequest();
@@ -319,7 +323,6 @@ $('#first_choose_of_exams_list').on('click',function(){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState==4 && xmlhttp.status==200){
 			var data=JSON.parse(xmlhttp.responseText);
-			$('.content1').append('<div id="new_exams_div"><table id="new_exams_table"></table></div>')
 			if("empty" in data){
 				$('#new_exams_table').empty();
 				$('#new_exams_table').append('<tr><th>'+data["empty"]+'</th></tr>');
@@ -329,7 +332,7 @@ $('#first_choose_of_exams_list').on('click',function(){
 				});
 				return;
 			}else{
-				
+
 			}
 		}
 	}
@@ -395,9 +398,19 @@ function new_collection_dialog(){
 				xmlhttp.onreadystatechange=function(){
 					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 						var data=JSON.parse(xmlhttp.responseText);
-						if(data===1){
-							bootbox.hideAll();												
+						if(data===0){
+							alert('Random errors ...');
+							return;
 						}
+						//$('.content1').append('<ul id="collections_list" class="list-group"></ul>')
+						$('.content1 #new_exams_table').empty();
+						$.each(data,function(key,value){
+							if(value['Count']>99){
+								$('.content1 #new_exams_table').append('<tr><td class="list-group-item"><span class="badge">>99</span> '+value["CollectionName"]+'</td></tr>');
+							}else{
+								$('.content1 #new_exams_table').append('<tr><td class="list-group-item"><span class="badge">'+value["Count"]+'</span> '+value["CollectionName"]+'</td></tr>');
+							}
+						});
 					}
 				}
 				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);

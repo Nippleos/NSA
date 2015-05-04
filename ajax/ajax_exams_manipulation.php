@@ -18,7 +18,10 @@
 	}else if($_POST['name']==='createcollection'){
 		$value='INSERT INTO Collection VALUES(NULL,"'.$_POST["coll_name"].'","'.$_POST["userid"].'");';
 		$rs=$conn->query($value);
-		if($rs===false)echo '0'; else echo '1';
+		if($rs===false){echo '0'; return;}
+		$value='SELECT CollectionName,COUNT(ca.AssignementID) AS Count FROM Collection c LEFT JOIN CollectionOfAssignements ca ON(c.CollectionID=ca.CollectionID) LEFT JOIN Assignements a ON(ca.AssignementID=a.AssignementID) GROUP BY CollectionName;';
+		$rs=$conn->query($value);
+		if($rs===false) echo $conn->error; else echo json_encode($arr=$rs->fetch_all(MYSQLI_ASSOC));
 	}
 
 
