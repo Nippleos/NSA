@@ -321,9 +321,11 @@ $('#glyphicon-list-alt').on('click',function(){
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState==4 && xmlhttp.status==200){
 				var data=JSON.parse(xmlhttp.responseText);
+				$('.content1').append('<div id="new_exams_div"><table id="new_exams_table"></table></div>')
 				if("empty" in data){
-					$('.content1').append('<div id="new_exams_div">'+data["empty"]+'<a href=#><span class="glyphicon glyphicon-book"></span></a></div>')
-					$('#').append('<th>'+data['empty']+'</th>');
+					$('#new_exams_table').empty();
+					$('#new_exams_table').append('<tr><th>'+data["empty"]+'</th></tr>');
+					$('#new_exams_table').append('<tr id="new_exams_lastrow"><td><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td></tr>')
 					return;
 				}
 			}
@@ -331,6 +333,9 @@ $('#glyphicon-list-alt').on('click',function(){
 		xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
 		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xmlhttp.send(parameters);
+		$('#new_exams_table #new_exams_lastrow #glyphicon-book').on('click',function(){
+			new_collection_dialog();
+		});
 		/*check if prof. created any collection */
 	});
 	/********************** showing exams ********************/
@@ -356,3 +361,52 @@ $('#glyphicon-list-alt').on('click',function(){
 		});
 	});
 });
+
+function new_collection_dialog(){
+	var a=bootbox.dialog({
+	title: "Setting up new collection",
+	onEscape: function(){},
+	backdrop: true,
+	message: 
+		'<div class="row"><div class="col-md-12"> ' +
+			'<form class="form-horizontal"> ' +
+				'<div class="form-group"> ' +
+					'<label class="col-md-4 control-label" for="coll_name">Set name</label>' +
+					'<div class="col-md-4"> ' +
+						'<input id="coll_name" name="coll_name" type="text" placeholder="Collection name" class="form-control input-md">' +
+					'</div> ' +
+				'</div> '+
+			'</form>'+
+		'</div> </div>',
+	buttons: {
+		danger: {
+			label: "Cancel",
+			className: "btn-danger",
+			callback: function() {
+				
+			}
+		},
+		success: {
+			label: "Create",
+			className: "btn-success",
+			callback: function () {
+				var xmlhttp=new XMLHttpRequest();
+				var parameters="name=createcollection&userid="+$('#session_info #p_userid').text()+"&name="+$('.col-md-4 input[id=coll_name]').val();
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+						var data=JSON.parse(xmlhttp.responseText);
+						if(data===1){
+							bootbox.hideAll();												
+						}
+					}
+				}
+				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(parameters);
+				Example.show("Success!");
+			}
+		}
+	}
+});
+
+}
