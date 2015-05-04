@@ -366,62 +366,64 @@ $('#third_choose_of_exams_list').on('click',function(){
 });
 
 function new_collection_dialog(){
-	bootbox.dialog({
-	title: "Setting up new collection",
-	onEscape: function(){},
-	backdrop: true,
-	message: 
-		'<div class="row"><div class="col-md-12"> ' +
-			'<form class="form-horizontal"> ' +
-				'<div class="form-group"> ' +
-					'<label class="col-md-4 control-label" for="coll_name">Set name</label>' +
-					'<div class="col-md-4"> ' +
-						'<input id="coll_name" name="coll_name" type="text" placeholder="Collection name" class="form-control input-md">' +
-					'</div> ' +
-				'</div> '+
-			'</form>'+
-		'</div> </div>',
-	buttons: {
-		danger: {
-			label: "Cancel",
-			className: "btn-danger",
-			callback: function() {
-				
-			}
-		},
-		success: {
-			label: "Create",
-			className: "btn-success",
-			callback: function () {
-				var xmlhttp=new XMLHttpRequest();
-				var parameters="name=createcollection&userid="+$('#session_info #p_userid').text()+"&coll_name="+$('.col-md-4 input[id=coll_name]').val();
-				xmlhttp.onreadystatechange=function(){
-					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
-						var data=JSON.parse(xmlhttp.responseText);
-						if(data===0){
-							alert('Random errors ...');
-							return;
-						}
-						$('.content1 #new_exams_table').empty();
-						$('.content1 #new_exams_table').append('<th></th><th>Collection name</th><th>Number of exams</th><th>Toys</th>')
-						$('.content1 #new_exams_table').before('<h3>New exams</h3>');
-						$.each(data,function(key,value){
-							if(value['Count']>99){
-								$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span class="badge">>99</span></td><td></td></tr>');
-							}else{
-								$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span style="text-align:center" class="badge">'+value["Count"]+'</span></td><td></td></tr>');
-							}
-						});
-						bootbox.hideAll();
-					}
+	var box=bootbox.dialog({
+		title: "Setting up new collection",
+		onEscape: function(){},
+		backdrop: true,
+		message: 
+			'<div class="row"><div class="col-md-12"> ' +
+				'<form class="form-horizontal"> ' +
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="coll_name">Set name</label>' +
+						'<div class="col-md-4"> ' +
+							'<input id="coll_name" name="coll_name" type="text" placeholder="Collection name" class="form-control input-md">' +
+						'</div> ' +
+					'</div> '+
+				'</form>'+
+			'</div> </div>',
+		buttons: {
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+					
 				}
-				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
-				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xmlhttp.send(parameters);
-				Example.show("Success!");
+			},
+			success: {
+				label: "Create",
+				className: "btn-success",
+				callback: function () {
+					var xmlhttp=new XMLHttpRequest();
+					var parameters="name=createcollection&userid="+$('#session_info #p_userid').text()+"&coll_name="+$('.col-md-4 input[id=coll_name]').val();
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+							var data=JSON.parse(xmlhttp.responseText);
+							if(data===0){
+								alert('Random errors ...');
+								return;
+							}
+							$('.content1 #new_exams_table').empty();
+							$('.content1 #new_exams_table').append('<th></th><th>Collection name</th><th>Number of exams</th><th>Toys</th>')
+							$('.content1 #new_exams_table').before('<h3>New exams</h3>');
+							$.each(data,function(key,value){
+								if(value['Count']>99){
+									$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span class="badge">>99</span></td><td></td></tr>');
+								}else{
+									$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span style="text-align:center" class="badge">'+value["Count"]+'</span></td><td></td></tr>');
+								}
+							});
+							bootbox.hideAll();
+						}
+					}
+					xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);
+					Example.show("Success!");
+				}
 			}
 		}
-	}
-});
-
+	});
+	box.on('shown.bs.modal',function(){
+		$('.col-md-4 input[id=coll_name]').focus();
+	});
 }
