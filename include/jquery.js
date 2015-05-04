@@ -304,6 +304,7 @@ $('#glyphicon-user').on('click',function(){
 $('#glyphicon-list-alt').on('click',function(){
 	hide_container();
 	$('.content1').show();
+	/********************** creating new exams ********************/
 	$('#first_choose_of_exams_list').on('click',function(){
 		$('#exams_list_group').hide();
 		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
@@ -311,9 +312,28 @@ $('#glyphicon-list-alt').on('click',function(){
 		$('.content1 #home_button').on('click',function(){
 			$('.content1 h3').remove();
 			$(this).remove();
+			$('#new_exams_div').remove();
 			$('.content1 #exams_list_group').show();
 		});
+		/* check if prof. created any collection */
+		var xmlhttp=new XMLHttpRequest();
+		var parameters="name=checkcollections&userid="+$('#session_info #p_userid').text();
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState==4 && xmlhttp.status==200){
+				var data=JSON.parse(xmlhttp.responseText);
+				if("empty" in data){
+					$('.content1').append('<div id="new_exams_div">'+data["empty"]+'<a href=#><span class="glyphicon glyphicon-book"></span></a></div>')
+					$('#').append('<th>'+data['empty']+'</th>');
+					return;
+				}
+			}
+		}
+		xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(parameters);
+		/*check if prof. created any collection */
 	});
+	/********************** showing exams ********************/
 	$('#second_choose_of_exams_list').on('click',function(){
 		$('#exams_list_group').hide();
 		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
@@ -324,6 +344,7 @@ $('#glyphicon-list-alt').on('click',function(){
 			$('.content1 #exams_list_group').show();
 		});
 	});
+	/********************** editing exams ********************/
 	$('#third_choose_of_exams_list').on('click',function(){
 		$('#exams_list_group').hide();
 		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');

@@ -2,7 +2,7 @@
 	session_start();
 	if(isset($_SESSION['user'])){
 		include 'include/connect_database.php';
-		echo '<div id="session_info" hidden><p id="p_username">'.$_SESSION["username"].'</p><p id="p_statusid">'.$_SESSION["status"].'</p></div>';
+		echo '<div id="session_info" hidden><p id="p_username">'.$_SESSION["username"].'</p><p id="p_statusid">'.$_SESSION["status"].'</p><p id="p_userid">'.$_SESSION["userid"].'</p></div>';
 	}else{
 		header('Location:web_login.php');
 		exit();
