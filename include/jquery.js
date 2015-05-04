@@ -269,7 +269,7 @@ $('#glyphicon-user').on('click',function(){
 											var data=JSON.parse(xmlhttp.responseText);
 											if(data===1){
 												$('#glyphicon-user').trigger('click');
-												bootbox.hideAll();												
+												bootbox.hideAll();										
 											}
 										}
 									}
@@ -309,7 +309,7 @@ $('#glyphicon-list-alt').on('click',function(){
 $('#first_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
 	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
-	$('.content1').append('<h3>New exams</h3>');
+	$('.content1 #new_exams_table').prepend('<h3>New exams</h3>');
 	$('.content1 #home_button').on('click',function(){
 		$('.content1 h3').remove();
 		$(this).remove();
@@ -402,15 +402,17 @@ function new_collection_dialog(){
 							alert('Random errors ...');
 							return;
 						}
-						//$('.content1').append('<ul id="collections_list" class="list-group"></ul>')
 						$('.content1 #new_exams_table').empty();
+						$('.content1 #new_exams_table').append('<th></th><th>Collection name</th><th>Number of exams</th><th>Toys</th>')
+						$('.content1 #new_exams_table').before('<h3>New exams</h3>');
 						$.each(data,function(key,value){
 							if(value['Count']>99){
-								$('.content1 #new_exams_table').append('<tr><td class="list-group-item"><span class="badge">>99</span> '+value["CollectionName"]+'</td></tr>');
+								$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span class="badge">>99</span></td><td></td></tr>');
 							}else{
-								$('.content1 #new_exams_table').append('<tr><td class="list-group-item"><span class="badge">'+value["Count"]+'</span> '+value["CollectionName"]+'</td></tr>');
+								$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span style="text-align:center" class="badge">'+value["Count"]+'</span></td><td></td></tr>');
 							}
 						});
+						bootbox.hideAll();
 					}
 				}
 				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
