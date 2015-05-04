@@ -174,7 +174,7 @@ $('#glyphicon-user').on('click',function(){
 	hide_container();
 	$('.content4').show();
 	var xmlhttp=new XMLHttpRequest();
-	var parameters="name=get_all&userid="+$('#session_info #p_statusid').text();
+	var parameters="name=get_all&statusid="+$('#session_info #p_statusid').text()+"&username="+$('#session_info #p_username').text();
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var data=JSON.parse(xmlhttp.responseText);
@@ -186,21 +186,31 @@ $('#glyphicon-user').on('click',function(){
 				return;
 			}
 			$.each(data,function(key,value){
-				$('#users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td><input type="checkbox" name="hmm" value="'+value["UserID"]+'"></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-plus'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-plus"></span></a></td></tr>');
-				
-			});
-			$('#users_table').append('<tr id="users_table_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete requests </i><a id="glyphicon-ok"><span class="glyphicon glyphicon-ok"></span></a><i> Confirm requests</i></td></tr>');
-			$('#users_table_lastrow input[type=checkbox]').on('click',function(){
-				if($('#users_table_lastrow input[type=checkbox]:checked').length){
-					$('#users_table td input[name=hmm]').each(function(){
-						$(this).prop('checked', true);
-					});
+				if(value["Username"]===$('#session_info #p_username').text()){
+					$('#users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td style="text-align:center"><a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 				}else{
-					$('#users_table td input[name=hmm]').each(function(){
-						$(this).prop('checked', false);
-					});
+					$('#users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 				}
-			});		
+				$('#users_table #glyphicon-remove'+value["UserID"]).on('click',function(){
+					alert('removeusers');
+					var xmlhttp=new XMLHttpRequest();
+					var parameters="name=remove_user&userid="+value["UserID"];
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+							var data=JSON.parse(xmlhttp.responseText);
+							alert(data);
+							if(data===1){
+								$(this).remove();
+							}
+						}
+					}
+					xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);
+				});
+			});
+			$('#users_table').append('<tr id="users_table_lastrow"><td colspan="8"></td></tr>');
+			
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
