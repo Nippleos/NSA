@@ -48,7 +48,21 @@
 		</div>
 		
 		<div class="content1" style="display:none">
-			
+			<h2>Playing with exams</h2>
+			<div class="list-group" id="exams_list_group">
+				<a href="#" id="first_choose_of_exams_list" class="list-group-item">
+					<h4 class="list-group-item-heading">Create new exam</h4>
+					<p class="list-group-item-text">Copy, edit old or create new one</p>
+				</a>
+				<a href="#" id="second_choose_of_exams_list" class="list-group-item">
+					<h4 class="list-group-item-heading">Show exams</h4>
+					<p class="list-group-item-text">List all created</p>
+				</a>
+				<a href="#" id="third_choose_of_exams_list" class="list-group-item">
+					<h4 class="list-group-item-heading">Edit exams</h4>
+					<p class="list-group-item-text">Do whatever you want (delete/edit)</p>
+				</a>
+			</div>			
 		</div>
 		<div class="content2" style="display:none">
 			
@@ -58,7 +72,7 @@
 				<table class="table" id="new_users_table"></table>
 			</div>
 		</div>
-		<div class="content4" style="">
+		<div class="content4" style="display:none">
 			<div class="table-responsive">
 				<table class="table" id="users_table"></table>
 			</div>

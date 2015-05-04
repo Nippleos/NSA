@@ -5,7 +5,10 @@ $('#logout').on('click',function(){
 generally();
 function generally(){ //check user status
 	if($('#session_info #p_statusid').text()<3){
-		
+		if($('#session_info #p_statusid').text()==1){
+			$('#glyphicon-list-alt').remove();
+			$('#glyphicon-bookmark').remove();
+		}
 		count_new_users();//check how much new users are here
 	}else{
 		$('#glyphicon-registration-mark').remove();
@@ -298,6 +301,37 @@ $('#glyphicon-user').on('click',function(){
 	xmlhttp.send(parameters);
 });
 
-$('').on('click',function(){
-	
+$('#glyphicon-list-alt').on('click',function(){
+	hide_container();
+	$('.content1').show();
+	$('#first_choose_of_exams_list').on('click',function(){
+		$('#exams_list_group').hide();
+		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+		$('.content1').append('<h3>New exams</h3>');
+		$('.content1 #home_button').on('click',function(){
+			$('.content1 h3').remove();
+			$(this).remove();
+			$('.content1 #exams_list_group').show();
+		});
+	});
+	$('#second_choose_of_exams_list').on('click',function(){
+		$('#exams_list_group').hide();
+		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+		$('.content1').append('<h3>List of exams</h3>');
+		$('.content1 #home_button').on('click',function(){
+			$('.content1 h3').remove();
+			$(this).remove();
+			$('.content1 #exams_list_group').show();
+		});
+	});
+	$('#third_choose_of_exams_list').on('click',function(){
+		$('#exams_list_group').hide();
+		$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+		$('.content1').append('<h3>Editing/deleting exams</h3>');
+		$('.content1 #home_button').on('click',function(){
+			$('.content1 h3').remove();
+			$(this).remove();
+			$('.content1 #exams_list_group').show();
+		});
+	});
 });
