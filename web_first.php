@@ -67,7 +67,7 @@
 					<p class="list-group-item-text">Do whatever you want (delete/edit)</p>
 				</a>
 			</div>
-			<div class="table-responsive">
+			<div class="table-responsive" style="margin-top:15px">
 				<table class="table" id="new_exams_table"></table>
 			</div>
 			<div class="table-responsive" style="margin-top:15px">

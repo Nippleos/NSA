@@ -305,6 +305,7 @@ $('#glyphicon-list-alt').on('click',function(){
 	$('#exams_list_group').show();
 	$('#tmp_table').remove();
 	$('#legend').remove();
+	$('#table_of_exams').empty();
 });
 /********************** creating new exams ********************/
 $('#first_choose_of_exams_list').on('click',function(){
@@ -443,9 +444,7 @@ $('#second_choose_of_exams_list').on('click',function(){
 $('#third_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
 	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span title="Back" id="home_button" class="glyphicon glyphicon-home"></span></a> ');
-	$('.content1').append('<h3>Editing/deleting exams</h3>');
 	$('.content1 #home_button').on('click',function(){
-		$('.content1 h3').remove();
 		$(this).remove();
 		$('.content1 #exams_list_group').show();
 	});
