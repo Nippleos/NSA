@@ -72,7 +72,9 @@
 			</div>
 		</div>
 		<div class="content2" style="display:none">
-			
+			<div class="table-responsive">
+				<table class="table" id="table_of_exams"></table>
+			</div>
 		</div>
 		<div class="content3" style="display:none">
 			<div class="table-responsive">

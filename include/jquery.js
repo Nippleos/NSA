@@ -308,7 +308,7 @@ $('#glyphicon-list-alt').on('click',function(){
 /********************** creating new exams ********************/
 $('#first_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
-	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span title="Back" id="home_button" class="glyphicon glyphicon-home"></span></a> ');
 	$('.content1 #home_button').on('click',function(){
 		$('.content1 h3').remove();
 		$(this).remove();
@@ -335,8 +335,8 @@ $('#first_choose_of_exams_list').on('click',function(){
 				$('#new_exams_table').empty();
 				$('#new_exams_table').append('<tr><th></th><th>Collection name</th><th>Number of exams</th><th>Add exam</th></tr>');
 				$.each(data,function(key,value){
-					if(value['Count']>99) $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><span class="badge">>99</span></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
-					else $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><span class="badge">'+value["Count"]+'</span></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
+					if(value['Count']>99) $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">>99</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
+					else $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">'+value["Count"]+'</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
 					$('#new_exams_table #glyphicon-plus-sign'+value["CollectionID"]).on('click',function(){
 						var id=$(this).attr("id").replace('glyphicon-plus-sign','');
 						new_exam_dialog(id);
@@ -394,21 +394,45 @@ $('#first_choose_of_exams_list').on('click',function(){
 	
 	/*check if prof. created any collection */
 });
+
 /********************** showing exams ********************/
 $('#second_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
-	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
-	$('.content1').append('<h3>List of exams</h3>');
+	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span title="Back" id="home_button" class="glyphicon glyphicon-home"></span></a> ');
 	$('.content1 #home_button').on('click',function(){
-		$('.content1 h3').remove();
 		$(this).remove();
 		$('.content1 #exams_list_group').show();
 	});
+	$('.content1 #table_of_exams').remove();
+	var xmlhttp=new XMLHttpRequest();
+	var parameters="name=getexams";
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var data=JSON.parse(xmlhttp.responseText);
+			if(data===0){
+				alert('Random error ...');										
+			}else{
+				$('#table_of_exams').empty();
+				$('.content1 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th>');
+				if("empty" in data){
+					$('#table_of_exams').append('<th>'+data['empty']+'</th>');
+					return;
+				}
+				$.each(data,function(key,value){
+					$('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td></tr>');
+				});	
+			}
+		}
+	}
+	xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(parameters);
 });
+
 /********************** editing exams ********************/
 $('#third_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
-	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span title="Back" id="home_button" class="glyphicon glyphicon-home"></span></a> ');
 	$('.content1').append('<h3>Editing/deleting exams</h3>');
 	$('.content1 #home_button').on('click',function(){
 		$('.content1 h3').remove();
@@ -488,7 +512,7 @@ function new_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="name">Description</label>' +
 						'<div class="col-md-4"> ' +
-							'<input id="description" name="description" type="text" placeholder="Description" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control input-md">'+
+							'<input id="description" name="description" type="textarea" placeholder="Description" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
@@ -521,8 +545,7 @@ function new_exam_dialog(id){
 			danger: {
 				label: "Cancel",
 				className: "btn-danger",
-				callback: function() {
-					
+				callback: function() {					
 				}
 			},
 			success: {
@@ -535,7 +558,8 @@ function new_exam_dialog(id){
 						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 							var data=JSON.parse(xmlhttp.responseText);
 							if(data===1){
-								//$('#glyphicon-user').trigger('click');
+								$('.content1 #home_button').remove();
+								$('#first_choose_of_exams_list').trigger('click');
 								bootbox.hideAll();										
 							}
 						}
