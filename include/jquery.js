@@ -418,10 +418,18 @@ $('#second_choose_of_exams_list').on('click',function(){
 					$('#table_of_exams').append('<th>'+data['empty']+'</th>');
 					return;
 				}
+				$('.content2').prepend('Rows with<span style="background-color:#eee;border:1px solid;padding-left:20px;margin-left:5px;margin-right:5px"></span> background color are yours.');
 				$('.content2 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th>');
+				var counter=0;
 				$.each(data,function(key,value){
-					$('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td></tr>');
+					counter++;
+
+					if(value['UserID']==$('#session_info #p_userid').text()){
+						$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td></tr>');
+					}else $('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td></tr>');
 				});	
+				
+				
 			}
 		}
 	}

@@ -72,7 +72,7 @@
 			</div>
 		</div>
 		<div class="content2" style="display:none">
-			<div class="table-responsive">
+			<div class="table-responsive" style="margin-top:15px">
 				<table class="table" id="table_of_exams"></table>
 			</div>
 		</div>

@@ -40,7 +40,7 @@
 			if($rs===false) echo 0; else echo 1;
 		}
 	}else if($_POST['name']==='getexams'){
-		$value='SELECT a.*,u.Name,u.Surname FROM Assignements a LEFT JOIN CollectionOfAssignements ca ON(a.AssignementID=ca.AssignementID) LEFT JOIN Collection c ON(ca.CollectionID=c.CollectionID) LEFT JOIN Users u ON(c.UserID=u.UserID);';
+		$value='SELECT a.*,u.Name,u.Surname,u.UserID FROM Assignements a LEFT JOIN CollectionOfAssignements ca ON(a.AssignementID=ca.AssignementID) LEFT JOIN Collection c ON(ca.CollectionID=c.CollectionID) LEFT JOIN Users u ON(c.UserID=u.UserID);';
 		$rs=$conn->query($value);
 		if($rs===false){
 
