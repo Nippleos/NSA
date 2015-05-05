@@ -343,6 +343,10 @@ $('#first_choose_of_exams_list').on('click',function(){
 					});
 				});
 				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td colspan="4"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete collections </i></td></tr>');
+				$('.content1').append('<table><tr id="new_exams_lastrow1"><td colspan="4"><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td><tr></table>');
+				$('#new_exams_table #new_exams_lastrow1 #glyphicon-book').on('click',function(){
+					new_collection_dialog();
+				});
 				$('#new_exams_lastrow input[type=checkbox]').on('click',function(){
 					if($('#new_exams_lastrow input[type=checkbox]:checked').length){
 						$('#new_exams_table td input[name=hmm]').each(function(){
@@ -468,7 +472,7 @@ function new_collection_dialog(){
 
 function new_exam_dialog(id){
 	var a=bootbox.dialog({
-	title: "New exam ",
+	title: "New exam",
 	onEscape: function(){},
 	backdrop: true,
 	message: 
