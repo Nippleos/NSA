@@ -303,19 +303,19 @@ $('#glyphicon-list-alt').on('click',function(){
 	$('.content1 #home_button').remove();
 	$('.content1 h3').remove();
 	$('#exams_list_group').show();
-	
+	$('#tmp_table').remove();
 });
 /********************** creating new exams ********************/
 $('#first_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
 	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span id="home_button" class="glyphicon glyphicon-home"></span></a> ');
-	$('.content1 #new_exams_table').prepend('<h3>New exams</h3>');
 	$('.content1 #home_button').on('click',function(){
 		$('.content1 h3').remove();
 		$(this).remove();
 		$('#new_exams_div').remove();
 		$('.content1 #exams_list_group').show();
 		$('#new_exams_table').empty();
+		$('#tmp_table').remove();
 	});
 	/* check if prof. created any collection */
 	var xmlhttp=new XMLHttpRequest();
@@ -326,7 +326,7 @@ $('#first_choose_of_exams_list').on('click',function(){
 			if("empty" in data){
 				$('#new_exams_table').empty();
 				$('#new_exams_table').append('<tr><th>'+data["empty"]+'</th></tr>');
-				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td></tr>')
+				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span><span> Make new collection</span></a></td></tr>')
 				$('#new_exams_table #new_exams_lastrow #glyphicon-book').on('click',function(){
 					new_collection_dialog();
 				});
@@ -343,8 +343,9 @@ $('#first_choose_of_exams_list').on('click',function(){
 					});
 				});
 				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td colspan="4"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete collections </i></td></tr>');
-				$('.content1').append('<table><tr id="new_exams_lastrow1"><td colspan="4"><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td><tr></table>');
-				$('#new_exams_table #new_exams_lastrow1 #glyphicon-book').on('click',function(){
+				$('#tmp_table').remove();
+				$('.content1').append('<table id="tmp_table"><tr id="new_exams_lastrow1"><td colspan="4"><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td><tr></table>');
+				$('#new_exams_lastrow1 #glyphicon-book').on('click',function(){
 					new_collection_dialog();
 				});
 				$('#new_exams_lastrow input[type=checkbox]').on('click',function(){
