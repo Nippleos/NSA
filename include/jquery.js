@@ -304,6 +304,7 @@ $('#glyphicon-list-alt').on('click',function(){
 	$('.content1 h3').remove();
 	$('#exams_list_group').show();
 	$('#tmp_table').remove();
+	$('#legend').remove();
 });
 /********************** creating new exams ********************/
 $('#first_choose_of_exams_list').on('click',function(){
@@ -402,9 +403,9 @@ $('#second_choose_of_exams_list').on('click',function(){
 	$('.content1 #home_button').on('click',function(){
 		$(this).remove();
 		$('.content1 #exams_list_group').show();
+		$('#legend').remove();
+		$('.content1 #table_of_exams').empty();
 	});
-	$('.content2').show();
-	$('.content2 #table_of_exams').empty();
 	var xmlhttp=new XMLHttpRequest();
 	var parameters="name=getexams";
 	xmlhttp.onreadystatechange=function(){
@@ -418,8 +419,8 @@ $('#second_choose_of_exams_list').on('click',function(){
 					$('#table_of_exams').append('<th>'+data['empty']+'</th>');
 					return;
 				}
-				$('.content2').prepend('Rows with<span style="background-color:#eee;border:1px solid;padding-left:20px;margin-left:5px;margin-right:5px"></span> background color are yours.');
-				$('.content2 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th>');
+				$('.content1 h2[name=title]').after('<p id="legend">Rows with<span style="background-color:#eee;border:1px solid;padding-left:20px;margin-left:5px;margin-right:5px"></span> background color are yours.</p>');
+				$('.content1 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th>');
 				var counter=0;
 				$.each(data,function(key,value){
 					counter++;

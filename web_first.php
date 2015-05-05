@@ -48,7 +48,7 @@
 		</div>
 		
 		<div class="content1" style="display:none">
-			<h2>Playing with exams</h2>
+			<h2 name="title">Playing with exams</h2>
 			<div class="list-group" id="exams_list_group">
 				<a href="#" id="first_choose_of_exams_list" class="list-group-item">
 					<h4 class="list-group-item-heading">Create new exam & collection</h4>
@@ -70,11 +70,11 @@
 			<div class="table-responsive">
 				<table class="table" id="new_exams_table"></table>
 			</div>
-		</div>
-		<div class="content2" style="display:none">
 			<div class="table-responsive" style="margin-top:15px">
 				<table class="table" id="table_of_exams"></table>
 			</div>
+		</div>
+		<div class="content2" style="display:none">
 		</div>
 		<div class="content3" style="display:none">
 			<div class="table-responsive">
