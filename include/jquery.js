@@ -473,82 +473,78 @@ function new_collection_dialog(){
 
 function new_exam_dialog(id){
 	var a=bootbox.dialog({
-	title: "New exam",
-	onEscape: function(){},
-	backdrop: true,
-	message: 
-		'<div class="row"><div class="col-md-12"> ' +
-			'<form class="form-horizontal"> ' +
-				'<div class="form-group"> ' +
-					'<label class="col-md-4 control-label" for="title">Title*</label>' +
-					'<div class="col-md-4"> ' +
-						'<input id="title" name="title" type="text" required placeholder="Title" value="'+$("#users_table #user_tr"+id+" #users_uname").text()+'" class="form-control input-md">' +
-					'</div> ' +
-				'</div> '+
-				'<div class="form-group"> ' +
-					'<label class="col-md-4 control-label" for="name">Description</label>' +
-					'<div class="col-md-4"> ' +
-						'<input id="description" name="description" type="text" placeholder="Description" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control input-md">'+
-					'</div> ' +
-				'</div> '+
-				'<div class="form-group"> ' +
-					'<label class="col-md-4 control-label" for="surname">Keywords</label>'+
-					'<div class="col-md-4"> ' +
-						'<input id="keywords" name="keywords" type="text" placeholder="Keywords" value="'+$("#users_table #user_tr"+id+" #users_surname").text()+'" class="form-control input-md">'+
-					'</div> ' +
-				'</div> '+
-				'<div class="form-group"> ' +
-					'<label class="col-md-4 control-label" for="emso">Startline</label>'+
-					'<div class="col-md-4"> ' +
-						'<input id="startline" name="startline" type="text" placeholder="Startline" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
-					'</div> ' +
-				'</div> '+
-				'<div class="form-group" id="status_change_div"> ' +
-					'<label class="col-md-4 control-label" for="status">Deadline</label>'+
-					'<div class="col-md-4"> ' +
-						'<input id="deadline" name="deadline" type="text" placeholder="Deadline" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
-					'</div> ' +
-				'</div> '+
-				'<div class="form-group"> ' +
-					'<label class="col-md-4 control-label" for="password">Max students</label>'+
-					'<div class="col-md-4"> ' +
-						'<input id="maxnumber" name="maxnumber" type="text" placeholder="Max students" class="form-control input-md">'+
-					'</div> ' +
-				'</div> '+
-			'</form>'+
-		'</div> </div>',
-	buttons: {
-		danger: {
-			label: "Cancel",
-			className: "btn-danger",
-			callback: function() {
-				
-			}
-		},
-		success: {
-			label: "Save",
-			className: "btn-success",
-			callback: function () {
-				/*var xmlhttp=new XMLHttpRequest();
-				var parameters="name=update_user&userid="+id+"&uname="+$('.col-md-4 input[id=uname]').val()+"&firstname="+$('.col-md-4 input[id=name]').val()+"&surname="+$('.col-md-4 input[id=surname]').val()+"&emso="+$('.col-md-4 input[id=emso]').val()+"&status="+$('.col-md-4 input[id=status]').val()+"&password="+$('.col-md-4 input[id=password]').val();
-				xmlhttp.onreadystatechange=function(){
-					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
-						var data=JSON.parse(xmlhttp.responseText);
-						if(data===1){
-							$('#glyphicon-user').trigger('click');
-							bootbox.hideAll();										
+		title: "New exam",
+		onEscape: function(){},
+		backdrop: true,
+		message: 
+			'<div class="row"><div class="col-md-12"> ' +
+				'<form class="form-horizontal"> ' +
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="title">Title*</label>' +
+						'<div class="col-md-4"> ' +
+							'<input id="title" name="title" type="text" required placeholder="Title" value="'+$("#users_table #user_tr"+id+" #users_uname").text()+'" class="form-control input-md">' +
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="name">Description</label>' +
+						'<div class="col-md-4"> ' +
+							'<input id="description" name="description" type="text" placeholder="Description" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="surname">Keywords</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="keywords" name="keywords" type="text" placeholder="Keywords" value="'+$("#users_table #user_tr"+id+" #users_surname").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="emso">Startline</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="startline" name="startline" type="text" placeholder="Startline" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group" id="status_change_div"> ' +
+						'<label class="col-md-4 control-label" for="status">Deadline</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="deadline" name="deadline" type="text" placeholder="Deadline" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="password">Max students</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="maxnumber" name="maxnumber" type="text" placeholder="Max students" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+				'</form>'+
+			'</div> </div>',
+		buttons: {
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+					
+				}
+			},
+			success: {
+				label: "Save",
+				className: "btn-success",
+				callback: function () {
+					var xmlhttp=new XMLHttpRequest();
+					var parameters="name=newexam&collectionid="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&description="+$('.col-md-4 input[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val()+"&startline="+$('.col-md-4 input[id=startline]').val()+"&deadline="+$('.col-md-4 input[id=deadline]').val()+"&maxnumber="+$('.col-md-4 input[id=maxnumber]').val();
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+							var data=JSON.parse(xmlhttp.responseText);
+							if(data===1){
+								//$('#glyphicon-user').trigger('click');
+								bootbox.hideAll();										
+							}
 						}
 					}
+					xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);
 				}
-				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
-				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xmlhttp.send(parameters);
-				Example.show("Success!");*/
 			}
 		}
-	}
-});
-if($('#session_info #p_statusid').text()!=1){
-	$('#status_change_div').remove();
-}
+	});
 }
