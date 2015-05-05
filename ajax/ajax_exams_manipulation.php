@@ -31,12 +31,23 @@
 		}
 		echo '1';
 	}else if($_POST['name']==='newexam'){
-		print_r($_POST);
 		$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,NULL,"'.$_POST["startline"].'","'.$_POST["deadline"].'","'.$_POST["maxnumber"].'")';
 		$rs=$conn->query($value);
-		if($rs===fasle) echo $conn->error;
+		if($rs===false) echo $conn->error;
 		else{
-			$value='INSERT INTO CollectionOfAssignements'
+			$value='INSERT INTO CollectionOfAssignements VALUES('.$_POST["collectionid"].','.$conn->insert_id.');';
+			$rs=$conn->query($value);
+			if($rs===false) echo 0; else echo 1;
+		}
+	}else if($_POST['name']==='getexams'){
+		$value='SELECT a.*,u.Name,u.Surname FROM Assignements a LEFT JOIN CollectionOfAssignements ca ON(a.AssignementID=ca.AssignementID) LEFT JOIN Collection c ON(ca.CollectionID=c.CollectionID) LEFT JOIN Users u ON(c.UserID=u.UserID);';
+		$rs=$conn->query($value);
+		if($rs===false){
+
+		}else{
+			$arr=$rs->fetch_all(MYSQLI_ASSOC);
+			if(isset($arr[0]["AssignementID"]))	echo json_encode($arr);
+			else echo json_encode(array("empty"=>"You don't have any collections of assignements yet. First make new one."));
 		}
 	}
 
