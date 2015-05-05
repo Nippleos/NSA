@@ -403,7 +403,8 @@ $('#second_choose_of_exams_list').on('click',function(){
 		$(this).remove();
 		$('.content1 #exams_list_group').show();
 	});
-	$('.content1 #table_of_exams').remove();
+	$('.content2').show();
+	$('.content2 #table_of_exams').empty();
 	var xmlhttp=new XMLHttpRequest();
 	var parameters="name=getexams";
 	xmlhttp.onreadystatechange=function(){
@@ -412,12 +413,12 @@ $('#second_choose_of_exams_list').on('click',function(){
 			if(data===0){
 				alert('Random error ...');										
 			}else{
-				$('#table_of_exams').empty();
-				$('.content1 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th>');
+				$('#table_of_exams').empty();				
 				if("empty" in data){
 					$('#table_of_exams').append('<th>'+data['empty']+'</th>');
 					return;
 				}
+				$('.content2 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th>');
 				$.each(data,function(key,value){
 					$('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td></tr>');
 				});	
