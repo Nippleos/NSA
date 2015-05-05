@@ -69,7 +69,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 			}
 			$.each(data,function(key,value){		
 				$('#new_users_table').append('<tr id="new_users_tr'+value["UserID"]+'"><td><input type="checkbox" name="hmm" value="'+value["UserID"]+'"></td><td>'+value["UserID"]+'</td><td>'+value["Username"]+'</td><td>'+value["Name"]+'</td><td>'+value["Surname"]+'</td><td>'+value["Emso"]+'</td><td>'+value["StatusID"]+'</td><td><a id="glyphicon-remove'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-plus'+value["UserID"]+'" href="#"><span class="glyphicon glyphicon-plus"></span></a></td></tr>');
-				$('#glyphicon-remove'+value["UserID"]).on('click',function(){
+				$('#new_users_table #glyphicon-remove'+value["UserID"]).on('click',function(){
 					var id=$(this).attr('id').replace('glyphicon-remove','');
 					var xmlhttp=new XMLHttpRequest();
 					var parameters="name=removeuser&id="+id;
@@ -86,7 +86,7 @@ $('#glyphicon-registration-mark').on('click',function(){
 					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					xmlhttp.send(parameters);
 				});
-				$('#glyphicon-plus'+value["UserID"]).on('click',function(){
+				$('#new_users_table #glyphicon-plus'+value["UserID"]).on('click',function(){
 					var id=$(this).attr('id').replace('glyphicon-plus','');
 					var xmlhttp=new XMLHttpRequest();
 					var parameters="name=checkuser&id="+id;
@@ -332,7 +332,50 @@ $('#first_choose_of_exams_list').on('click',function(){
 				});
 				return;
 			}else{
-
+				$('#new_exams_table').empty();
+				$('#new_exams_table').append('<tr><th></th><th>Collection name</th><th>Number of exams</th><th>Add exam</th></tr>');
+				$.each(data,function(key,value){
+					if(value['Count']>99) $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><span class="badge">>99</span></td><td><a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
+					else $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><span class="badge">'+value["Count"]+'</span></td><td><a href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
+				});
+				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td colspan="4"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete collections </i></td></tr>');
+				$('#new_exams_lastrow input[type=checkbox]').on('click',function(){
+					if($('#new_exams_lastrow input[type=checkbox]:checked').length){
+						$('#new_exams_table td input[name=hmm]').each(function(){
+							$(this).prop('checked', true);
+						});
+					}else{
+						$('#new_exams_table td input[name=hmm]').each(function(){
+							$(this).prop('checked', false);
+						});
+					}
+				});
+				$('#new_exams_lastrow #glyphicon-trash').on('click',function(){
+					var vsi=[];
+					$('#new_exams_table input[name=hmm]:checked').each(function(){
+						vsi.push($(this).val());
+					});
+					var xmlhttp=new XMLHttpRequest();
+					var parameters="name=removecollections&ids="+JSON.stringify(vsi);
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+							var data=JSON.parse(xmlhttp.responseText);
+							if(data===1){
+								$.each(vsi,function(key,value){
+									$('#new_exams_tr'+value).remove();
+									$('.content1 #home_button').remove();
+									$('#first_choose_of_exams_list').trigger('click');
+								});
+							}else{
+								$('.content1 #home_button').remove();
+								$('#first_choose_of_exams_list').trigger('click');
+							}
+						}
+					}
+					xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);
+				});
 			}
 		}
 	}
@@ -402,16 +445,8 @@ function new_collection_dialog(){
 								alert('Random errors ...');
 								return;
 							}
-							$('.content1 #new_exams_table').empty();
-							$('.content1 #new_exams_table').append('<th></th><th>Collection name</th><th>Number of exams</th><th>Toys</th>')
-							$('.content1 #new_exams_table').before('<h3>New exams</h3>');
-							$.each(data,function(key,value){
-								if(value['Count']>99){
-									$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span class="badge">>99</span></td><td></td></tr>');
-								}else{
-									$('.content1 #new_exams_table').append('<tr><td></td><td>'+value["CollectionName"]+'</td><td><span style="text-align:center" class="badge">'+value["Count"]+'</span></td><td></td></tr>');
-								}
-							});
+							$('.content1 #home_button').remove();
+							$('#first_choose_of_exams_list').trigger('click');
 							bootbox.hideAll();
 						}
 					}

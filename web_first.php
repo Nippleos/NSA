@@ -51,7 +51,7 @@
 			<h2>Playing with exams</h2>
 			<div class="list-group" id="exams_list_group">
 				<a href="#" id="first_choose_of_exams_list" class="list-group-item">
-					<h4 class="list-group-item-heading">Create new exam</h4>
+					<h4 class="list-group-item-heading">Create new exam & collection</h4>
 					<p class="list-group-item-text">Copy, edit old or create new one</p>
 				</a>
 				<a href="#" id="second_choose_of_exams_list" class="list-group-item">
