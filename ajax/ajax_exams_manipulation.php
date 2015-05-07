@@ -102,7 +102,12 @@
 			}
 		}
 		echo '1';
+	}else if($_POST['name']==='changename'){
+		$value='UPDATE Collection SET CollectionName="'.$_POST["coll_name"].'" WHERE CollectionID='.$_POST["id"].';';
+		$rs=$conn->query($value);
+		if($rs===false)echo 0; else echo 1;
 	}
+
 
 
 ?>

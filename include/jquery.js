@@ -338,14 +338,15 @@ $('#first_choose_of_exams_list').on('click',function(){
 				$('#new_exams_table').empty();
 				$('#new_exams_table').append('<tr><th></th><th>Collection name</th><th>Number of exams</th><th>Add exam</th><th>Change coll. name</th></tr>');
 				$.each(data,function(key,value){
-					if(value['Count']>99) $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">>99</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td><td><a id="glyphicon-edit'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
-					else $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">'+value["Count"]+'</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td><td><a id="glyphicon-edit'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					if(value['Count']>99) $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td id="collection_name">'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">>99</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td><td><a id="glyphicon-edit'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					else $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td id="collection_name">'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">'+value["Count"]+'</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td><td><a id="glyphicon-edit'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 					$('#new_exams_table #glyphicon-plus-sign'+value["CollectionID"]).on('click',function(){
 						var id=$(this).attr("id").replace('glyphicon-plus-sign','');
 						new_exam_dialog(id);
 					});
 					$('#new_exams_table #glyphicon-edit'+value["CollectionID"]).on('click',function(){
-						
+						var id=$(this).attr("id").replace('glyphicon-edit','');
+						change_collection_name_dialog(id);
 					});
 				});
 				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td colspan="4"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete collections </i></td></tr>');
@@ -513,6 +514,60 @@ $('#third_choose_of_exams_list').on('click',function(){
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send(parameters);
 });
+
+function change_collection_name_dialog(id){
+	var box=bootbox.dialog({
+		title: "Setting up new collection",
+		onEscape: function(){},
+		backdrop: true,
+		message: 
+			'<div class="row"><div class="col-md-12"> ' +
+				'<form class="form-horizontal"> ' +
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="collection_name1">Set name</label>' +
+						'<div class="col-md-4"> ' +
+							'<input id="collection_name1" name="collection_name1" type="text" placeholder="Collection name" value="'+$("#new_exams_tr"+id+" #collection_name").text()+'" class="form-control input-md">' +
+						'</div> ' +
+					'</div> '+
+				'</form>'+
+			'</div> </div>',
+		buttons: {
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+					
+				}
+			},
+			success: {
+				label: "Confirm",
+				className: "btn-success",
+				callback: function () {
+					var xmlhttp=new XMLHttpRequest();
+					var parameters="name=changename&id="+id+"&coll_name="+$('.col-md-4 input[id=collection_name1]').val();
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+							var data=JSON.parse(xmlhttp.responseText);
+							if(data===0){
+								alert('Random errors ...');
+								return;
+							}
+							$('.content1 #home_button').remove();
+							$('#first_choose_of_exams_list').trigger('click');
+							bootbox.hideAll();
+						}
+					}
+					xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);
+				}
+			}
+		}
+	});
+	box.on('shown.bs.modal',function(){
+		$('.col-md-4 input[id=coll_name]').focus();
+	});
+}
 
 function new_collection_dialog(){
 	var box=bootbox.dialog({
