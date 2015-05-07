@@ -306,6 +306,7 @@ $('#glyphicon-list-alt').on('click',function(){
 	$('#legend').remove();
 	$('#table_of_exams').empty();
 	$('#table_of_editable_exams').empty();
+
 });
 /********************** creating new exams ********************/
 $('#first_choose_of_exams_list').on('click',function(){
@@ -335,13 +336,16 @@ $('#first_choose_of_exams_list').on('click',function(){
 				return;
 			}else{
 				$('#new_exams_table').empty();
-				$('#new_exams_table').append('<tr><th></th><th>Collection name</th><th>Number of exams</th><th>Add exam</th></tr>');
+				$('#new_exams_table').append('<tr><th></th><th>Collection name</th><th>Number of exams</th><th>Add exam</th><th>Change coll. name</th></tr>');
 				$.each(data,function(key,value){
-					if(value['Count']>99) $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">>99</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
-					else $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">'+value["Count"]+'</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td></tr>');
+					if(value['Count']>99) $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">>99</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td><td><a id="glyphicon-edit'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					else $('#new_exams_table').append('<tr id="new_exams_tr'+value["CollectionID"]+'"><td><input type="checkbox" name="hmm" value="'+value["CollectionID"]+'"></td><td>'+value["CollectionName"]+'</td><td><a href="#"><span class="badge">'+value["Count"]+'</span></a></td><td><a id="glyphicon-plus-sign'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-plus-sign"></span></a></td><td><a id="glyphicon-edit'+value["CollectionID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 					$('#new_exams_table #glyphicon-plus-sign'+value["CollectionID"]).on('click',function(){
 						var id=$(this).attr("id").replace('glyphicon-plus-sign','');
 						new_exam_dialog(id);
+					});
+					$('#new_exams_table #glyphicon-edit'+value["CollectionID"]).on('click',function(){
+						
 					});
 				});
 				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td colspan="4"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete collections </i></td></tr>');
@@ -375,10 +379,12 @@ $('#first_choose_of_exams_list').on('click',function(){
 								$.each(vsi,function(key,value){
 									$('#new_exams_tr'+value).remove();
 									$('.content1 #home_button').remove();
+									$('.content1 #tmp_table').remove();
 									$('#first_choose_of_exams_list').trigger('click');
 								});
 							}else{
 								$('.content1 #home_button').remove();
+								$('.content1 #tmp_table').remove();
 								$('#first_choose_of_exams_list').trigger('click');
 							}
 						}
@@ -481,6 +487,9 @@ $('#third_choose_of_exams_list').on('click',function(){
 								$('#edit_exam_tr'+value).remove();
 							});
 						}
+						$('.content1 #home_button').remove();
+						$('#table_of_editable_exams').empty();
+						$('#third_choose_of_exams_list').trigger('click');
 					}
 				}
 				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
