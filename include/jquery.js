@@ -570,10 +570,10 @@ function edit_exam_dialog(id){
 							'<input id="published" name="published" type="text" placeholder="1/0" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #published").text()+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
-					'<div class="form-group" id="status_change_div"> ' +
+					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="description">Description</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="description" name="description" type="text" placeholder="Description" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'" class="form-control input-md">'+
+							'<input id="description" name="description" type="text" placeholder="1/0" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
@@ -597,19 +597,21 @@ function edit_exam_dialog(id){
 				className: "btn-success",
 				callback: function () {
 					var xmlhttp=new XMLHttpRequest();
-					var parameters="name=update_user&userid="+id+"&uname="+$('.col-md-4 input[id=uname]').val()+"&firstname="+$('.col-md-4 input[id=name]').val()+"&surname="+$('.col-md-4 input[id=surname]').val()+"&emso="+$('.col-md-4 input[id=emso]').val()+"&status="+$('.col-md-4 input[id=status]').val()+"&password="+$('.col-md-4 input[id=password]').val();
+					var parameters="name=update_exam&id="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&startline="+$('.col-md-4 input[id=startline]').val()+"&deadline="+$('.col-md-4 input[id=deadline]').val()+"&published="+$('.col-md-4 input[id=published]').val()+"&description="+$('.col-md-4 input[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val();
 					xmlhttp.onreadystatechange=function(){
 						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 							var data=JSON.parse(xmlhttp.responseText);
 							if(data===1){
-								$('#glyphicon-user').trigger('click');
+								$('.content1 #home_button').remove();
+								$('#third_choose_of_exams_list').trigger('click');
 								bootbox.hideAll();										
 							}
 						}
-					}
-					xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
+					}	
+					xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
 					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					xmlhttp.send(parameters);
+					alert(id);
 				}
 			}
 		}

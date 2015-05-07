@@ -71,6 +71,11 @@
 		$rs=$conn->query($value);
 		if($rs===false) echo $conn->error;
 		else echo json_encode($arr=$rs->fetch_all(MYSQLI_ASSOC));
+	}else if($_POST['name']==='update_exam'){
+		$value='UPDATE Assignements SET Title="'.$_POST["title"].'", Startline="'.$_POST["startline"].'", Deadline="'.$_POST["deadline"].'", Published="'.$_POST["published"].'",Description="'.$_POST["description"].'", KeyWords="'.$_POST["keywords"].'" WHERE AssignementID='.$_POST["id"].';';
+		$rs=$conn->query($value);
+		if($rs===false)echo $conn->error;
+		else echo 1;
 	}
 
 
