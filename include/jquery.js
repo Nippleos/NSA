@@ -276,7 +276,6 @@ $('#glyphicon-user').on('click',function(){
 									xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
 									xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 									xmlhttp.send(parameters);
-									Example.show("Success!");
 								}
 							}
 						}
@@ -306,6 +305,7 @@ $('#glyphicon-list-alt').on('click',function(){
 	$('#tmp_table').remove();
 	$('#legend').remove();
 	$('#table_of_exams').empty();
+	$('#table_of_editable_exams').empty();
 });
 /********************** creating new exams ********************/
 $('#first_choose_of_exams_list').on('click',function(){
@@ -445,7 +445,43 @@ $('#third_choose_of_exams_list').on('click',function(){
 	$('.content1 #home_button').on('click',function(){
 		$(this).remove();
 		$('.content1 #exams_list_group').show();
+		$('#table_of_editable_exams').empty();
 	});
+	$('#table_of_editable_exams').empty();
+	var xmlhttp=new XMLHttpRequest();
+	var parameters="name=readforedit&userid="+$('#session_info #p_userid').text();
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState==4 && xmlhttp.status==200){
+			var data=JSON.parse(xmlhttp.responseText);
+			if("empty" in data){
+				$('#table_of_editable_exams').append('<th>'+data['empty']+'</th>');
+				return;
+			}
+			$('#table_of_editable_exams').append('<tr><th></th><th>ID</th><th>Title</th><th>Startline</th><th>Deadline</th><th>Published</th><th>Description</th><th>Keywords</th><th>Toys</th></tr>');
+			$.each(data,function(key,value){
+				$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+value["Published"]+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+				$('#table_of_editable_exams #glyphicon-edit'+value["AssignementID"]).on('click',function(){
+					var id=$(this).attr("id").replace('glyphicon-edit','');
+					edit_exam_dialog(id);
+				});
+			});
+			$('#table_of_editable_exams').append('<tr id="editable_exams_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete assignements</i></td></tr>');
+			$('#editable_exams_lastrow input[type=checkbox]').on('click',function(){
+				if($('#editable_exams_lastrow input[type=checkbox]:checked').length){
+					$('#table_of_editable_exams td input[name=hmm]').each(function(){
+						$(this).prop('checked', true);
+					});
+				}else{
+					$('#table_of_editable_exams td input[name=hmm]').each(function(){
+						$(this).prop('checked', false);
+					});
+				}
+			});
+		}
+	}
+	xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(parameters);
 });
 
 function new_collection_dialog(){
@@ -500,6 +536,89 @@ function new_collection_dialog(){
 	box.on('shown.bs.modal',function(){
 		$('.col-md-4 input[id=coll_name]').focus();
 	});
+}
+
+function edit_exam_dialog(id){
+	var a=bootbox.dialog({
+		title: "Modify exam",
+		onEscape: function(){},
+		backdrop: true,
+		message: 
+			'<div class="row"><div class="col-md-12"> ' +
+				'<form class="form-horizontal"> ' +
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="title">Title</label>' +
+						'<div class="col-md-4"> ' +
+							'<input id="title" name="title" type="text" placeholder="Title" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #title").text()+'" class="form-control input-md">' +
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="startline">Startline</label>' +
+						'<div class="col-md-4"> ' +
+							'<input id="startline" name="startline" type="text" placeholder="Date" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #startline").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="deadline">Deadline</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="deadline" name="deadline" type="text" placeholder="Date" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #deadline").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="published">Published</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="published" name="published" type="text" placeholder="1/0" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #published").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group" id="status_change_div"> ' +
+						'<label class="col-md-4 control-label" for="description">Description</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="description" name="description" type="text" placeholder="Description" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +
+						'<label class="col-md-4 control-label" for="keywords">Keywords</label>'+
+						'<div class="col-md-4"> ' +
+							'<input id="keywords" name="keywords" type="text" placeholder="Keywords" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #keywords").text()+'" class="form-control input-md">'+
+						'</div> ' +
+					'</div> '+
+				'</form>'+
+			'</div> </div>',
+		buttons: {
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+					
+				}
+			},
+			success: {
+				label: "Save",
+				className: "btn-success",
+				callback: function () {
+					var xmlhttp=new XMLHttpRequest();
+					var parameters="name=update_user&userid="+id+"&uname="+$('.col-md-4 input[id=uname]').val()+"&firstname="+$('.col-md-4 input[id=name]').val()+"&surname="+$('.col-md-4 input[id=surname]').val()+"&emso="+$('.col-md-4 input[id=emso]').val()+"&status="+$('.col-md-4 input[id=status]').val()+"&password="+$('.col-md-4 input[id=password]').val();
+					xmlhttp.onreadystatechange=function(){
+						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+							var data=JSON.parse(xmlhttp.responseText);
+							if(data===1){
+								$('#glyphicon-user').trigger('click');
+								bootbox.hideAll();										
+							}
+						}
+					}
+					xmlhttp.open("POST","ajax/ajax_users_settings.php",true);
+					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xmlhttp.send(parameters);
+				}
+			}
+		}
+	});
+	if($('#session_info #p_statusid').text()!=1){
+		$('#status_change_div').remove();
+	}
+	
+
 }
 
 function new_exam_dialog(id){
