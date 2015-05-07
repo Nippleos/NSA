@@ -425,8 +425,8 @@ $('#second_choose_of_exams_list').on('click',function(){
 				var counter=0;
 				$.each(data,function(key,value){
 					if(value['UserID']==$('#session_info #p_userid').text()){
-						$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CurrentNumber"]+'</td></tr>');
-					}else $('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CurrentNumber"]+'</td></tr>');
+						$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
+					}else $('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
 				});	
 				
 				

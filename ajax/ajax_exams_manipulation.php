@@ -45,15 +45,14 @@
 		if($rs===false){
 		}else{
 			$arr=$rs->fetch_all(MYSQLI_ASSOC);
-			if(isset($arr[0]["AssignementID"])){
-				print_r($arr);
+			if(isset($arr[0]["AssignementID"])){				
 				foreach ($arr as $key => $value) {
 					$value1='SELECT COUNT(DateTime) AS CurrentNumber FROM Users u LEFT JOIN ChossingAnAssignement ca ON(u.UserID=ca.Userid) WHERE ca.UserID='.$value["UserID"].' AND AssignementID='.$value["AssignementID"].' GROUP BY u.UserID;';
 					$rs=$conn->query($value1);
 					if($rs===false){
 						echo '<br>'.$conn->error.'<br>';
 					}else{
-						echo $value1;
+						//echo $value1;
 						$arras=$rs->fetch_all(MYSQLI_ASSOC);
 						if(empty($arras)){
 							$arr[$key]['CountNumber']=0;
@@ -63,6 +62,7 @@
 					}
 				}
 				echo json_encode($arr);
+				//print_r($arr);
 			}
 			else echo json_encode(array("empty"=>"You don't have any collections of assignements yet. First make new one."));
 		}
