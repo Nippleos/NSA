@@ -25,9 +25,18 @@
 		if($rs===false) echo $conn->error; else echo json_encode($arr=$rs->fetch_all(MYSQLI_ASSOC));
 	}else if($_POST['name']==='removecollections'){
 		foreach (json_decode($_POST['ids']) as $key => $value) {
-			$value='DELETE FROM Collection WHERE CollectionID='.$value.';';
-			$rs=$conn->query($value);
-			if($rs===false){echo '0';return;}
+			$val1='SELECT AssignementID FROM CollectionOfAssignements WHERE CollectionID='.$value.';';
+			$rs=$conn->query($val1);
+			$val1='DELETE FROM CollectionOfAssignements WHERE CollectionID='.$value.';';
+			$rs1=$conn->query($val1);
+			$arr=$rs->fetch_all(MYSQLI_ASSOC);
+			foreach ($arr as $key => $value1) {
+				$value0='DELETE FROM Assignements WHERE AssignementID='.$value1["AssignementID"].';'; 
+				$rs=$conn->query($value0);
+			}
+			$value1='DELETE FROM Collection WHERE CollectionID='.$value.';';
+			$rs=$conn->query($value1);
+			if($rs===false){echo $conn->error;return;}
 		}
 		echo '1';
 	}else if($_POST['name']==='newexam'){
@@ -50,6 +59,7 @@
 					$value1='SELECT COUNT(DateTime) AS CurrentNumber FROM Users u LEFT JOIN ChossingAnAssignement ca ON(u.UserID=ca.Userid) WHERE ca.UserID='.$value["UserID"].' AND AssignementID='.$value["AssignementID"].' GROUP BY u.UserID;';
 					$rs=$conn->query($value1);
 					if($rs===false){
+						echo 'napal;';
 						echo '<br>'.$conn->error.'<br>';
 					}else{
 						//echo $value1;
