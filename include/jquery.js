@@ -421,12 +421,12 @@ $('#second_choose_of_exams_list').on('click',function(){
 					return;
 				}
 				$('.content1 h2[name=title]').after('<p id="legend">Rows with<span style="background-color:#eee;border:1px solid;padding-left:20px;margin-left:5px;margin-right:5px"></span> background color are yours.</p>');
-				$('.content1 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th><th>Startline</th><th>Deadline</th><th>Max canditdates</th><th>Current count of canditdates</th>');
+				$('.content1 #table_of_exams').append('<th>Exam ID</th><th>Title</th><th>Creator</th><th>Description</th><th>Keywords</th><th>Created</th><th>Startline</th><th>Deadline</th><th>Max canditdates</th><th>Participated</th>');
 				var counter=0;
 				$.each(data,function(key,value){
 					if(value['UserID']==$('#session_info #p_userid').text()){
-						$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td></tr>');
-					}else $('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td></tr><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td>');
+						$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CurrentNumber"]+'</td></tr>');
+					}else $('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CurrentNumber"]+'</td></tr>');
 				});	
 				
 				
