@@ -62,10 +62,6 @@
 					<h4 class="list-group-item-heading">Edit exams</h4>
 					<p class="list-group-item-text">Do whatever you want (delete/edit)</p>
 				</a>
-				<a href="#" id="fourth_choose_of_exams_list" class="list-group-item">
-					<h4 class="list-group-item-heading">Edit collections</h4>
-					<p class="list-group-item-text">Do whatever you want (delete/edit)</p>
-				</a>
 			</div>
 			<div class="table-responsive" style="margin-top:15px">
 				<table class="table" id="new_exams_table"></table>

@@ -466,6 +466,27 @@ $('#third_choose_of_exams_list').on('click',function(){
 				});
 			});
 			$('#table_of_editable_exams').append('<tr id="editable_exams_lastrow"><td colspan="8"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete assignements</i></td></tr>');
+			$('#editable_exams_lastrow #glyphicon-trash').on('click',function(){
+				var vsi=[];
+				$('#table_of_editable_exams input[name=hmm]:checked').each(function(){
+					vsi.push($(this).val());
+				});
+				var xmlhttp=new XMLHttpRequest();
+				var parameters="name=removeexams&id="+JSON.stringify(vsi);
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+						var data=JSON.parse(xmlhttp.responseText);
+						if(data===1){
+							$.each(vsi,function(key,value){
+								$('#edit_exam_tr'+value).remove();
+							});
+						}
+					}
+				}
+				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(parameters);
+			});
 			$('#editable_exams_lastrow input[type=checkbox]').on('click',function(){
 				if($('#editable_exams_lastrow input[type=checkbox]:checked').length){
 					$('#table_of_editable_exams td input[name=hmm]').each(function(){
