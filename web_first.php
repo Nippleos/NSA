@@ -73,6 +73,9 @@
 			<div class="table-responsive" style="margin-top:15px">
 				<table class="table" id="table_of_exams"></table>
 			</div>
+			<div class="table-responsive" style="margin-top:15px">
+				<table class="table" id="table_of_editable_exams"></table>
+			</div>
 		</div>
 		<div class="content2" style="display:none">
 		</div>
@@ -89,8 +92,8 @@
 	</div>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="include/jquery.js"></script>
 	<script src="include/bootstrap.js"></script>
 	<script src="include/bootbox.min.js"></script><!-- dialog etc-->
+	<script src="include/jquery.js"></script>
 </body>
 </html>

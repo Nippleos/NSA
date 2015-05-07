@@ -66,6 +66,11 @@
 			}
 			else echo json_encode(array("empty"=>"You don't have any collections of assignements yet. First make new one."));
 		}
+	}else if($_POST['name']==='readforedit'){
+		$value='SELECT a.* FROM Assignements a INNER JOIN CollectionOfAssignements coa ON(a.AssignementID=coa.AssignementID) INNER JOIN Collection c ON(coa.CollectionID=c.CollectionID) INNER JOIN Users u ON(c.UserID=u.UserID) WHERE u.UserID='.$_POST["userid"].';';
+		$rs=$conn->query($value);
+		if($rs===false) echo $conn->error;
+		else echo json_encode($arr=$rs->fetch_all(MYSQLI_ASSOC));
 	}
 
 
