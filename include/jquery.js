@@ -349,7 +349,7 @@ $('#first_choose_of_exams_list').on('click',function(){
 						change_collection_name_dialog(id);
 					});
 				});
-				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td colspan="4"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete collections </i></td></tr>');
+				$('#new_exams_table').append('<tr id="new_exams_lastrow"><td colspan="5"><img src="images/arrow_ltr.png" />&nbsp<input type="checkbox"> Mark all</input> <i style="margin-left:30px; margin-right:10px;">With marked: </i><a id="glyphicon-trash" href="#"><span class="glyphicon glyphicon-trash"></span></a><i> Delete collections </i></td></tr>');
 				$('#tmp_table').remove();
 				$('.content1').append('<table id="tmp_table"><tr id="new_exams_lastrow1"><td colspan="4"><a id="glyphicon-book" href=#><span class="glyphicon glyphicon-book"></span> Make new collection</a></td><tr></table>');
 				$('#new_exams_lastrow1 #glyphicon-book').on('click',function(){
@@ -724,7 +724,7 @@ function new_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="name">Description</label>' +
 						'<div class="col-md-4"> ' +
-							'<input id="description" name="description" type="textarea" placeholder="Description" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control input-md">'+
+							'<textarea style="resize:vertical" rows="5" id="description" name="description" placeholder="Description" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control"></textarea>'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
@@ -736,13 +736,13 @@ function new_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="emso">Startline</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="startline" name="startline" type="text" placeholder="Startline" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
+							'<input id="startline" name="startline" type="date" placeholder="Startline" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group" id="status_change_div"> ' +
 						'<label class="col-md-4 control-label" for="status">Deadline</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="deadline" name="deadline" type="text" placeholder="Deadline" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
+							'<input id="deadline" name="deadline" type="date" placeholder="Deadline" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
