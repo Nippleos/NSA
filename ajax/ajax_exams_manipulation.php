@@ -40,11 +40,15 @@
 		}
 		echo '1';
 	}else if($_POST['name']==='newexam'){
-		$sl=DateTime::createFromFormat('d/m/Y', $_POST['startline']);
-		$dl=DateTime::createFromFormat('d/m/Y', $_POST['deadline']);
-		$startline=$sl->format('Y-m-d');
-		$deadline=$dl->format('Y-m-d');
-		$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,NULL,"'.$startline.'","'.$deadline.'","'.$_POST["maxnumber"].'")';
+		if(strlen($_POST['startline'])>0){
+			$sl=DateTime::createFromFormat('d/m/Y', $_POST['startline']);
+			$dl=DateTime::createFromFormat('d/m/Y', $_POST['deadline']);
+			$startline=$sl->format('Y-m-d');
+			$deadline=$dl->format('Y-m-d');
+			$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,1,"'.$startline.'","'.$deadline.'","'.$_POST["maxnumber"].'")';
+		}else{
+			$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,0,"NULL","NULL","'.$_POST["maxnumber"].'")';
+		}
 		$rs=$conn->query($value);
 		if($rs===false) echo 0;
 		else{

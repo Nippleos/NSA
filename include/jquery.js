@@ -432,7 +432,10 @@ $('#second_choose_of_exams_list').on('click',function(){
 				var counter=0;
 				$.each(data,function(key,value){
 					if(value['UserID']==$('#session_info #p_userid').text()){
+						if(value['Startline']==='0000-00-00')value['Startline']='/';
+						if(value['Deadline']==='0000-00-00') value['Deadline']='/';
 						$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
+
 					}else $('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
 				});	
 				
@@ -466,6 +469,8 @@ $('#third_choose_of_exams_list').on('click',function(){
 			}
 			$('#table_of_editable_exams').append('<tr><th></th><th>ID</th><th>Title</th><th>Startline</th><th>Deadline</th><th>Published</th><th>Description</th><th>Keywords</th><th>Toys</th></tr>');
 			$.each(data,function(key,value){
+				if(value['Startline']==='0000-00-00')value['Startline']='/';
+				if(value['Deadline']==='0000-00-00') value['Deadline']='/';
 				$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+value["Published"]+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 				$('#table_of_editable_exams #glyphicon-edit'+value["AssignementID"]).on('click',function(){
 					var id=$(this).attr("id").replace('glyphicon-edit','');
@@ -517,7 +522,7 @@ $('#third_choose_of_exams_list').on('click',function(){
 
 function change_collection_name_dialog(id){
 	var box=bootbox.dialog({
-		title: "Setting up new collection",
+		title: "Change"+$("#new_exams_tr"+id+" #collection_name").text()+" name",
 		onEscape: function(){},
 		backdrop: true,
 		message: 
@@ -623,6 +628,10 @@ function new_collection_dialog(){
 }
 
 function edit_exam_dialog(id){
+	if($('#edit_exam_tr'+id+' #startline').text()==='/')var startline='';
+	else startline=$('#edit_exam_tr'+id+' #startline').text();
+	if($('#edit_exam_tr'+id+' #deadline').text()==='/') var deadline='';
+	else deadline=$('#edit_exam_tr'+id+' #deadline').text();
 	var a=bootbox.dialog({
 		title: "Modify exam",
 		onEscape: function(){},
@@ -639,13 +648,13 @@ function edit_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="startline">Startline</label>' +
 						'<div class="col-md-4"> ' +
-							'<input id="startline" name="startline" type="text" placeholder="Date" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #startline").text()+'" class="form-control input-md">'+
+							'<input id="startline" name="startline" type="text" placeholder="Date" value="'+startline+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="deadline">Deadline</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="deadline" name="deadline" type="text" placeholder="Date" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #deadline").text()+'" class="form-control input-md">'+
+							'<input id="deadline" name="deadline" type="text" placeholder="Date" value="'+deadline+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
@@ -757,7 +766,7 @@ function new_exam_dialog(id){
 				className: "btn-success",
 				callback: function () {
 					var xmlhttp=new XMLHttpRequest();
-					var parameters="name=newexam&collectionid="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&description="+$('.col-md-4 input[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val()+"&startline="+$('.input-daterange .col-md-4 input[name=start]').val()+"&deadline="+$('.input-daterange .col-md-4 input[name=end]').val()+"&maxnumber="+$('.col-md-4 input[id=maxnumber]').val();
+					var parameters="name=newexam&collectionid="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&description="+$('.col-md-4 textarea[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val()+"&startline="+$('.input-daterange .col-md-4 input[name=start]').val()+"&deadline="+$('.input-daterange .col-md-4 input[name=end]').val()+"&maxnumber="+$('.col-md-4 input[id=maxnumber]').val();
 					xmlhttp.onreadystatechange=function(){
 						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 							var data=JSON.parse(xmlhttp.responseText);
@@ -783,5 +792,4 @@ function new_exam_dialog(id){
 			autoclose: true
 		});			
 	});
-	
 }
