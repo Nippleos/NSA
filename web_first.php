@@ -16,6 +16,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/first.css" />
+	<link rel="stylesheet" type="text/css" href="include/datepicker/css/bootstrap-datepicker3.css" />
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -85,10 +86,12 @@
 				<table class="table" id="users_table"></table>
 			</div>
 		</div>
-	</div>	
+	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="include/bootstrap.js"></script>
+	
+	<script src="include/datepicker/js/bootstrap-datepicker.js"></script>
 	<script src="include/bootbox.min.js"></script><!-- dialog etc-->
 	<script src="include/jquery.js"></script>
 </body>

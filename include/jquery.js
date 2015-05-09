@@ -703,8 +703,6 @@ function edit_exam_dialog(id){
 	if($('#session_info #p_statusid').text()!=1){
 		$('#status_change_div').remove();
 	}
-	
-
 }
 
 function new_exam_dialog(id){
@@ -733,13 +731,13 @@ function new_exam_dialog(id){
 							'<input id="keywords" name="keywords" type="text" placeholder="Keywords" value="'+$("#users_table #user_tr"+id+" #users_surname").text()+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
-					'<div class="form-group"> ' +
+					'<div class="form-group" id="startline_input_new_exam"> ' +
 						'<label class="col-md-4 control-label" for="emso">Startline</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="startline" name="startline" type="date" placeholder="Startline" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
+							'<input id="startline" name="startline" type="text" placeholder="Startline" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
-					'<div class="form-group" id="status_change_div"> ' +
+					'<div class="form-group" id="deadline_input_new_exam"> ' +
 						'<label class="col-md-4 control-label" for="status">Deadline</label>'+
 						'<div class="col-md-4"> ' +
 							'<input id="deadline" name="deadline" type="date" placeholder="Deadline" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
@@ -748,7 +746,7 @@ function new_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="password">Max students</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="maxnumber" name="maxnumber" type="text" placeholder="Max students" class="form-control input-md">'+
+							'<input id="maxnumber"  name="maxnumber" type="text" placeholder="Max students" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 				'</form>'+
@@ -783,4 +781,13 @@ function new_exam_dialog(id){
 			}
 		}
 	});
+	a.on("shown.bs.modal", function() {
+		$('#startline_input_new_exam input[type=text]').datepicker({
+			startDate: '-infinity',
+			clearBtn: true,
+			autoclose: true,
+			todayHighlight: true
+		});
+	});
+	
 }
