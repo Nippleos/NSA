@@ -40,7 +40,11 @@
 		}
 		echo '1';
 	}else if($_POST['name']==='newexam'){
-		$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,NULL,"'.$_POST["startline"].'","'.$_POST["deadline"].'","'.$_POST["maxnumber"].'")';
+		$sl=DateTime::createFromFormat('d/m/Y', $_POST['startline']);
+		$dl=DateTime::createFromFormat('d/m/Y', $_POST['deadline']);
+		$startline=$sl->format('Y-m-d');
+		$deadline=$dl->format('Y-m-d');
+		$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,NULL,"'.$startline.'","'.$deadline.'","'.$_POST["maxnumber"].'")';
 		$rs=$conn->query($value);
 		if($rs===false) echo 0;
 		else{
