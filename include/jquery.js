@@ -681,8 +681,7 @@ function edit_exam_dialog(id){
 			danger: {
 				label: "Cancel",
 				className: "btn-danger",
-				callback: function() {
-					
+				callback: function() {					
 				}
 			},
 			success: {

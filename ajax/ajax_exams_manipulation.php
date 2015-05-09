@@ -64,6 +64,19 @@
 			$arr=$rs->fetch_all(MYSQLI_ASSOC);
 			if(isset($arr[0]["AssignementID"])){				
 				foreach ($arr as $key => $value) {
+					if($value['Startline']!='0000-00-00'){
+						$parts = explode('-', $value['Startline']);
+						$date  = "$parts[1]/$parts[2]/$parts[0]";
+						$arr[$key]['Startline']=$date;
+					}
+					if($value['Deadline']!='0000-00-00'){
+						$parts = explode('-', $value['Deadline']);
+						$date  = "$parts[1]/$parts[2]/$parts[0]";
+						$arr[$key]['Deadline']=$date;
+					}
+					$parts = explode('-', $value['Created']);
+					$date  = "$parts[1]/$parts[2]/$parts[0]";
+					$arr[$key]['Created']=$date;
 					$value1='SELECT COUNT(DateTime) AS CurrentNumber FROM Users u LEFT JOIN ChossingAnAssignement ca ON(u.UserID=ca.Userid) WHERE ca.UserID='.$value["UserID"].' AND AssignementID='.$value["AssignementID"].' GROUP BY u.UserID;';
 					$rs=$conn->query($value1);
 					if($rs===false){
@@ -90,6 +103,18 @@
 		if($rs===false){echo 0; return;}
 		$arr=$rs->fetch_all(MYSQLI_ASSOC);
 		if(count($arr)<1){echo json_encode(array("empty"=>"You dont have any exams."));return;}
+		foreach ($arr as $key => $value) {
+			if($value['Startline']!='0000-00-00'){
+				$parts = explode('-', $value['Startline']);
+				$date  = "$parts[1]/$parts[2]/$parts[0]";
+				$arr[$key]['Startline']=$date;
+			}
+			if($value['Deadline']!='0000-00-00'){
+				$parts = explode('-', $value['Deadline']);
+				$date  = "$parts[1]/$parts[2]/$parts[0]";
+				$arr[$key]['Deadline']=$date;
+			}
+		}
 		echo json_encode($arr);
 	}else if($_POST['name']==='update_exam'){
 		$value='UPDATE Assignements SET Title="'.$_POST["title"].'", Startline="'.$_POST["startline"].'", Deadline="'.$_POST["deadline"].'", Published="'.$_POST["published"].'",Description="'.$_POST["description"].'", KeyWords="'.$_POST["keywords"].'" WHERE AssignementID='.$_POST["id"].';';
