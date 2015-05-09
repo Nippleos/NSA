@@ -471,7 +471,8 @@ $('#third_choose_of_exams_list').on('click',function(){
 			$.each(data,function(key,value){
 				if(value['Startline']==='0000-00-00')value['Startline']='/';
 				if(value['Deadline']==='0000-00-00') value['Deadline']='/';
-				$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+value["Published"]+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+				if(value['Published']==='0') var published='N'; else var published='Y';
+				$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 				$('#table_of_editable_exams #glyphicon-edit'+value["AssignementID"]).on('click',function(){
 					var id=$(this).attr("id").replace('glyphicon-edit','');
 					edit_exam_dialog(id);
@@ -632,6 +633,7 @@ function edit_exam_dialog(id){
 	else startline=$('#edit_exam_tr'+id+' #startline').text();
 	if($('#edit_exam_tr'+id+' #deadline').text()==='/') var deadline='';
 	else deadline=$('#edit_exam_tr'+id+' #deadline').text();
+	alert($("#table_of_editable_exams #edit_exam_tr"+id+" #description").text());
 	var a=bootbox.dialog({
 		title: "Modify exam",
 		onEscape: function(){},
@@ -648,25 +650,27 @@ function edit_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="startline">Startline</label>' +
 						'<div class="col-md-4"> ' +
-							'<input id="startline" name="startline" type="text" placeholder="Date" value="'+startline+'" class="form-control input-md">'+
+							'<input id="startline" name="startline" type="text" placeholder="Start date" value="'+startline+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="deadline">Deadline</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="deadline" name="deadline" type="text" placeholder="Date" value="'+deadline+'" class="form-control input-md">'+
+							'<input id="deadline" name="deadline" type="text" placeholder="Finish date" value="'+deadline+'" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
-					'<div class="form-group"> ' +
-						'<label class="col-md-4 control-label" for="published">Published</label>'+
-						'<div class="col-md-4"> ' +
-							'<input id="published" name="published" type="text" placeholder="1/0" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #published").text()+'" class="form-control input-md">'+
+					'<div class="form-group" id="exam_update"> ' +
+						'<div class="input-daterange">'+
+							'<label class="col-md-4 control-label" for="startline">Start date from</label>'+
+							'<div class="col-md-4"> ' +
+								'<input type="text" class="input-md form-control" name="start" value="'+startline+'" /><span class="input-group-addon">to</span><input type="text" class="input-sdm form-control" name="end" value="'+deadline+'" />'+
+							'</div>'+
 						'</div> ' +
-					'</div> '+
+					'</div>'+
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="description">Description</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="description" name="description" type="text" placeholder="1/0" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'" class="form-control input-md">'+
+							'<textarea style="resize:vertical" rows="5" id="description" name="description" placeholder="Description" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'" class="form-control"></textarea>'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
@@ -689,7 +693,7 @@ function edit_exam_dialog(id){
 				className: "btn-success",
 				callback: function () {
 					var xmlhttp=new XMLHttpRequest();
-					var parameters="name=update_exam&id="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&startline="+$('.col-md-4 input[id=startline]').val()+"&deadline="+$('.col-md-4 input[id=deadline]').val()+"&published="+$('.col-md-4 input[id=published]').val()+"&description="+$('.col-md-4 input[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val();
+					var parameters="name=update_exam&id="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&startline="+$('#exam_update .input-daterange .col-md-4 input[name=start]').val()+"&deadline="+$('#exam_update .input-daterange .col-md-4 input[name=end]').val()+"&published="+$('.col-md-4 input[id=published]').val()+"&description="+$('.col-md-4 textarea[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val();
 					xmlhttp.onreadystatechange=function(){
 						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 							var data=JSON.parse(xmlhttp.responseText);
@@ -707,9 +711,14 @@ function edit_exam_dialog(id){
 			}
 		}
 	});
-	if($('#session_info #p_statusid').text()!=1){
-		$('#status_change_div').remove();
-	}
+	a.on("shown.bs.modal", function() {
+		$('#exam_update .input-daterange').datepicker({
+			format: "dd/mm/yyyy",
+			startDate: "-infinity",
+			clearBtn: true,
+			autoclose: true
+		});			
+	});
 }
 
 function new_exam_dialog(id){
@@ -738,7 +747,7 @@ function new_exam_dialog(id){
 							'<input id="keywords" name="keywords" type="text" placeholder="Keywords" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
-					'<div class="form-group"> ' +
+					'<div class="form-group" id="new_exam_insert"> ' +
 						'<div class="input-daterange">'+
 						'<label class="col-md-4 control-label" for="startline">Start date from</label>'+
 						'<div class="col-md-4"> ' +
@@ -784,7 +793,7 @@ function new_exam_dialog(id){
 		}
 	});
 	a.on("shown.bs.modal", function() {
-		$('.input-daterange').datepicker({
+		$('#new_exam_insert .input-daterange').datepicker({
 			format: "dd/mm/yyyy",
 			startDate: "-infinity",
 			clearBtn: true,

@@ -117,7 +117,17 @@
 		}
 		echo json_encode($arr);
 	}else if($_POST['name']==='update_exam'){
-		$value='UPDATE Assignements SET Title="'.$_POST["title"].'", Startline="'.$_POST["startline"].'", Deadline="'.$_POST["deadline"].'", Published="'.$_POST["published"].'",Description="'.$_POST["description"].'", KeyWords="'.$_POST["keywords"].'" WHERE AssignementID='.$_POST["id"].';';
+		print_r($_POST);
+		if($_POST['startline']!=''){
+			$parts = explode('/', $_POST['startline']);
+			$startline  = "$parts[2]/$parts[0]/$parts[1]";
+		}else $startline='';
+		if($_POST['deadline']!=''){
+			$parts = explode('/', $_POST['deadline']);
+			$deadline  = "$parts[2]/$parts[0]/$parts[1]";
+		}else $deadline='';
+		if($startline!='')$published=1;else $published=0;
+		$value='UPDATE Assignements SET Published='.$published.', Title="'.$_POST["title"].'", Startline="'.$startline.'", Deadline="'.$deadline.'",Description="'.$_POST["description"].'", KeyWords="'.$_POST["keywords"].'" WHERE AssignementID='.$_POST["id"].';';
 		$rs=$conn->query($value);
 		if($rs===false)echo $conn->error;
 		else echo 1;

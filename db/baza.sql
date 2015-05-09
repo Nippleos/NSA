@@ -27,7 +27,7 @@ Create table Assignements (
 	Description Text,
 	KeyWords Text,
 	Created Date NOT NULL,
-	Published Date,
+	Published int UNSIGNED NOT NULL DEFAULT '0';
 	Startline Date,
 	Deadline Date,
 	MaxNumber Int,
