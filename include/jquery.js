@@ -695,7 +695,6 @@ function edit_exam_dialog(id){
 					xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
 					xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					xmlhttp.send(parameters);
-					alert(id);
 				}
 			}
 		}
@@ -716,34 +715,29 @@ function new_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="title">Title*</label>' +
 						'<div class="col-md-4"> ' +
-							'<input id="title" name="title" type="text" required placeholder="Title" value="'+$("#users_table #user_tr"+id+" #users_uname").text()+'" class="form-control input-md">' +
+							'<input id="title" name="title" type="text" required placeholder="Title" class="form-control input-md">' +
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="name">Description</label>' +
 						'<div class="col-md-4"> ' +
-							'<textarea style="resize:vertical" rows="5" id="description" name="description" placeholder="Description" value="'+$("#users_table #user_tr"+id+" #users_name").text()+'" class="form-control"></textarea>'+
+							'<textarea style="resize:vertical" rows="5" id="description" name="description" placeholder="Description" class="form-control"></textarea>'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="surname">Keywords</label>'+
 						'<div class="col-md-4"> ' +
-							'<input id="keywords" name="keywords" type="text" placeholder="Keywords" value="'+$("#users_table #user_tr"+id+" #users_surname").text()+'" class="form-control input-md">'+
-						'</div> ' +
-					'</div> '+
-					'<div class="form-group" id="startline_input_new_exam"> ' +
-						'<label class="col-md-4 control-label" for="emso">Startline</label>'+
-						'<div class="col-md-4"> ' +
-							'<input id="startline" name="startline" type="text" placeholder="Startline" value="'+$("#users_table #user_tr"+id+" #users_emso").text()+'" class="form-control input-md">'+
-						'</div> ' +
-					'</div> '+
-					'<div class="form-group" id="deadline_input_new_exam"> ' +
-						'<label class="col-md-4 control-label" for="status">Deadline</label>'+
-						'<div class="col-md-4"> ' +
-							'<input id="deadline" name="deadline" type="date" placeholder="Deadline" value="'+$("#users_table #user_tr"+id+" #users_status").text()+'" class="form-control input-md">'+
+							'<input id="keywords" name="keywords" type="text" placeholder="Keywords" class="form-control input-md">'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
+						'<div class="input-daterange">'+
+						'<label class="col-md-4 control-label" for="startline">Start date from</label>'+
+						'<div class="col-md-4"> ' +
+							'<input type="text" class="input-md form-control" name="start" /><span class="input-group-addon">to</span><input type="text" class="input-sdm form-control" name="end" />'+
+						'</div></div> ' +
+					'</div> '+
+					'<div class="form-group"> ' +	
 						'<label class="col-md-4 control-label" for="password">Max students</label>'+
 						'<div class="col-md-4"> ' +
 							'<input id="maxnumber"  name="maxnumber" type="text" placeholder="Max students" class="form-control input-md">'+
@@ -763,7 +757,7 @@ function new_exam_dialog(id){
 				className: "btn-success",
 				callback: function () {
 					var xmlhttp=new XMLHttpRequest();
-					var parameters="name=newexam&collectionid="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&description="+$('.col-md-4 input[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val()+"&startline="+$('.col-md-4 input[id=startline]').val()+"&deadline="+$('.col-md-4 input[id=deadline]').val()+"&maxnumber="+$('.col-md-4 input[id=maxnumber]').val();
+					var parameters="name=newexam&collectionid="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&description="+$('.col-md-4 input[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val()+"&startline="+$('.input-daterange .col-md-4 input[name=start]').val()+"&deadline="+$('.input-daterange .col-md-4 input[name=end]').val()+"&maxnumber="+$('.col-md-4 input[id=maxnumber]').val();
 					xmlhttp.onreadystatechange=function(){
 						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 							var data=JSON.parse(xmlhttp.responseText);
@@ -782,12 +776,12 @@ function new_exam_dialog(id){
 		}
 	});
 	a.on("shown.bs.modal", function() {
-		$('#startline_input_new_exam input[type=text]').datepicker({
-			startDate: '-infinity',
+		$('.input-daterange').datepicker({
+			format: "dd/mm/yyyy",
+			startDate: "-infinity",
 			clearBtn: true,
-			autoclose: true,
-			todayHighlight: true
-		});
+			autoclose: true
+		});			
 	});
 	
 }
