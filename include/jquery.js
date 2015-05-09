@@ -589,8 +589,7 @@ function new_collection_dialog(){
 			danger: {
 				label: "Cancel",
 				className: "btn-danger",
-				callback: function() {
-					
+				callback: function() {					
 				}
 			},
 			success: {
