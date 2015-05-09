@@ -633,7 +633,6 @@ function edit_exam_dialog(id){
 	else startline=$('#edit_exam_tr'+id+' #startline').text();
 	if($('#edit_exam_tr'+id+' #deadline').text()==='/') var deadline='';
 	else deadline=$('#edit_exam_tr'+id+' #deadline').text();
-	alert($("#table_of_editable_exams #edit_exam_tr"+id+" #description").text());
 	var a=bootbox.dialog({
 		title: "Modify exam",
 		onEscape: function(){},
@@ -647,18 +646,6 @@ function edit_exam_dialog(id){
 							'<input id="title" name="title" type="text" placeholder="Title" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #title").text()+'" class="form-control input-md">' +
 						'</div> ' +
 					'</div> '+
-					'<div class="form-group"> ' +
-						'<label class="col-md-4 control-label" for="startline">Startline</label>' +
-						'<div class="col-md-4"> ' +
-							'<input id="startline" name="startline" type="text" placeholder="Start date" value="'+startline+'" class="form-control input-md">'+
-						'</div> ' +
-					'</div> '+
-					'<div class="form-group"> ' +
-						'<label class="col-md-4 control-label" for="deadline">Deadline</label>'+
-						'<div class="col-md-4"> ' +
-							'<input id="deadline" name="deadline" type="text" placeholder="Finish date" value="'+deadline+'" class="form-control input-md">'+
-						'</div> ' +
-					'</div> '+
 					'<div class="form-group" id="exam_update"> ' +
 						'<div class="input-daterange">'+
 							'<label class="col-md-4 control-label" for="startline">Start date from</label>'+
@@ -670,7 +657,7 @@ function edit_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="description">Description</label>'+
 						'<div class="col-md-4"> ' +
-							'<textarea style="resize:vertical" rows="5" id="description" name="description" placeholder="Description" value="'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'" class="form-control"></textarea>'+
+							'<textarea style="resize:vertical" rows="10" id="description" name="description" placeholder="Description" class="form-control">'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'</textarea>'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
@@ -693,7 +680,7 @@ function edit_exam_dialog(id){
 				className: "btn-success",
 				callback: function () {
 					var xmlhttp=new XMLHttpRequest();
-					var parameters="name=update_exam&id="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&startline="+$('#exam_update .input-daterange .col-md-4 input[name=start]').val()+"&deadline="+$('#exam_update .input-daterange .col-md-4 input[name=end]').val()+"&published="+$('.col-md-4 input[id=published]').val()+"&description="+$('.col-md-4 textarea[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val();
+					var parameters="name=update_exam&id="+id+"&title="+$('.col-md-4 input[id=title]').val()+"&startline="+$('#exam_update .input-daterange .col-md-4 input[name=start]').val()+"&deadline="+$('#exam_update .input-daterange .col-md-4 input[name=end]').val()+"&description="+$('.col-md-4 textarea[id=description]').val()+"&keywords="+$('.col-md-4 input[id=keywords]').val();
 					xmlhttp.onreadystatechange=function(){
 						if(xmlhttp.readyState==4 && xmlhttp.status==200) {
 							var data=JSON.parse(xmlhttp.responseText);

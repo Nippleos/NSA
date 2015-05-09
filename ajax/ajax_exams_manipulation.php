@@ -106,25 +106,24 @@
 		foreach ($arr as $key => $value) {
 			if($value['Startline']!='0000-00-00'){
 				$parts = explode('-', $value['Startline']);
-				$date  = "$parts[1]/$parts[2]/$parts[0]";
+				$date  = "$parts[2]/$parts[1]/$parts[0]";
 				$arr[$key]['Startline']=$date;
 			}
 			if($value['Deadline']!='0000-00-00'){
 				$parts = explode('-', $value['Deadline']);
-				$date  = "$parts[1]/$parts[2]/$parts[0]";
+				$date  = "$parts[2]/$parts[1]/$parts[0]";
 				$arr[$key]['Deadline']=$date;
 			}
 		}
 		echo json_encode($arr);
 	}else if($_POST['name']==='update_exam'){
-		print_r($_POST);
 		if($_POST['startline']!=''){
 			$parts = explode('/', $_POST['startline']);
-			$startline  = "$parts[2]/$parts[0]/$parts[1]";
+			$startline  = "$parts[2]/$parts[1]/$parts[0]";
 		}else $startline='';
 		if($_POST['deadline']!=''){
 			$parts = explode('/', $_POST['deadline']);
-			$deadline  = "$parts[2]/$parts[0]/$parts[1]";
+			$deadline  = "$parts[2]/$parts[1]/$parts[0]";
 		}else $deadline='';
 		if($startline!='')$published=1;else $published=0;
 		$value='UPDATE Assignements SET Published='.$published.', Title="'.$_POST["title"].'", Startline="'.$startline.'", Deadline="'.$deadline.'",Description="'.$_POST["description"].'", KeyWords="'.$_POST["keywords"].'" WHERE AssignementID='.$_POST["id"].';';
