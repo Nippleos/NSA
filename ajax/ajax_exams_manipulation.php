@@ -154,6 +154,13 @@
 		$value='UPDATE Collection SET CollectionName="'.$_POST["coll_name"].'" WHERE CollectionID='.$_POST["id"].';';
 		$rs=$conn->query($value);
 		if($rs===false)echo 0; else echo 1;
+	}else if($_POST['name']==='checkexamstatus'){
+		$value='SELECT AssignementID FROM Assignements WHERE Startline>CURRENT_DATE OR Deadline<CURRENT_DATE'; 
+		//naloge ki niso v izvajanju vec
+		$rs=$conn->query($value);
+		$arr=$rs->fetch_all(MYSQLI_ASSOC);//naloge ki niso v izvajanju vec
+		$value='SELECT a.AssignementID FROM Assignements a LEFT JOIN ChossingAnAssignement ca ON(a.AssignementID=ca.AssignementID) WHERE Startline<=CURRENT_DATE AND Deadline>=CURRENT_DATE GROUP BY a.AssignementID HAVING COUNT(ca.UserID)=0';
+		$arr1=$rs->fetch_all(MYSQLI_ASSOC);
 	}
 
 

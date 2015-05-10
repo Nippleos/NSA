@@ -490,17 +490,29 @@ $('#third_choose_of_exams_list').on('click',function(){
 			}
 			$('#table_of_editable_exams').append('<tr><th></th><th>ID</th><th>Title</th><th>Startline</th><th>Deadline</th><th>Published</th><th>Description</th><th>Keywords</th><th>Toys</th></tr>');
 			$.each(data,function(key,value){
+				var xmlhttp=new XMLHttpRequest();
+				var parameters="name=checkexamstatus&id="+value['AssignementID'];
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState==4 && xmlhttp.status==200){
+						var data=JSON.parse(xmlhttp.responseText);
+						
+					}
+				}
+				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(parameters);
 				if(value['Startline']==='0000-00-00')value['Startline']='/';
 				if(value['Deadline']==='0000-00-00') value['Deadline']='/';
 				if(value['Published']==='0') var published='N'; else var published='Y';
 				if(value['Description'].length>20){
 					var tmp=1;
-					value['Description1']=value['Description'].substring(0,20);
+					value['Description1']=value['Description'].substring(0,17);
 					value['Description1']=value['Description1']+'...';
 				}
 				if((typeof(tmp) != "undefined") && (tmp!==null) && tmp==1) {
 					$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description"><a href="#" id="editable_short_string'+value["AssignementID"]+'">'+value["Description1"]+'</a></td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 					$('#editable_short_string'+value["AssignementID"]).on('click',function(){
+						var xmlhttp=new XMLHttpRequest();
 						var id=$(this).attr("id").replace('editable_short_string','');
 						var parameters="name=getlongdescription&id="+id;
 						xmlhttp.onreadystatechange=function(){
@@ -733,7 +745,7 @@ function edit_exam_dialog1(id,niz){
 			danger: {
 				label: "Cancel",
 				className: "btn-danger",
-				callback: function() {					
+				callback: function(){
 				}
 			},
 			success: {
