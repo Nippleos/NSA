@@ -468,7 +468,7 @@ $('#second_choose_of_exams_list').on('click',function(){
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send(parameters);
 });
-
+/********************** editing exams ********************/
 $('#fourth_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
 	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span title="Back" id="home_button" class="glyphicon glyphicon-home"></span></a> ');

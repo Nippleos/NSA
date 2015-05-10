@@ -45,7 +45,7 @@
 			$dl=DateTime::createFromFormat('d/m/Y', $_POST['deadline']);
 			$startline=$sl->format('Y-m-d');
 			$deadline=$dl->format('Y-m-d');
-			$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,1,"'.$startline.'","'.$deadline.'","'.$_POST["maxnumber"].'")';
+			$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,0,"'.$startline.'","'.$deadline.'","'.$_POST["maxnumber"].'")';
 		}else{
 			$value='INSERT INTO Assignements VALUES(NULL,"'.$_POST["title"].'","'.$_POST["description"].'","'.$_POST["keywords"].'",CURRENT_DATE,0,"NULL","NULL","'.$_POST["maxnumber"].'")';
 		}
@@ -131,7 +131,7 @@
 			$parts = explode('/', $_POST['deadline']);
 			$deadline  = "$parts[2]/$parts[1]/$parts[0]";
 		}else $deadline='';
-		if($startline!='')$published=1;else $published=0;
+		if($startline!='')$published=0;else $published=0;
 		$value='UPDATE Assignements SET Published='.$published.', Title="'.$_POST["title"].'", Startline="'.$startline.'", Deadline="'.$deadline.'",Description="'.$_POST["description"].'", KeyWords="'.$_POST["keywords"].'" WHERE AssignementID='.$_POST["id"].';';
 		$rs=$conn->query($value);
 		if($rs===false)echo $conn->error;
