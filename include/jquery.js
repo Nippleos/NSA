@@ -469,6 +469,17 @@ $('#second_choose_of_exams_list').on('click',function(){
 	xmlhttp.send(parameters);
 });
 
+$('#fourth_choose_of_exams_list').on('click',function(){
+	$('#exams_list_group').hide();
+	$('.content1 h2').prepend('<a id="glyphicon-list-alt" href="#"><span title="Back" id="home_button" class="glyphicon glyphicon-home"></span></a> ');
+	$('.content1 #home_button').on('click',function(){
+		$(this).remove();
+		$('.content1 #exams_list_group').show();
+		$('').empty();
+		
+	});
+});
+
 /********************** editing exams ********************/
 $('#third_choose_of_exams_list').on('click',function(){
 	$('#exams_list_group').hide();
@@ -511,8 +522,14 @@ function editing_exams_to_table(data){
 					value['Description1']=value['Description'].substring(0,17);
 					value['Description1']=value['Description1']+'...';
 				}
+				if($.inArray(value['AssignementID'],editable_ids)!=-1)var check=1;
+				else var check=0;
 				if((typeof(tmp) != "undefined") && (tmp!==null) && tmp==1) {
-					$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description"><a href="#" id="editable_short_string'+value["AssignementID"]+'">'+value["Description1"]+'</a></td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					if(check){
+						$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description"><a href="#" id="editable_short_string'+value["AssignementID"]+'">'+value["Description1"]+'</a></td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					}else {
+						$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description"><a href="#" id="editable_short_string'+value["AssignementID"]+'">'+value["Description1"]+'</a></td><td id="keywords">'+value["KeyWords"]+'</td><td></td></tr>');
+					}
 					$('#editable_short_string'+value["AssignementID"]).on('click',function(){
 						var xmlhttp=new XMLHttpRequest();
 						var id=$(this).attr("id").replace('editable_short_string','');
@@ -528,7 +545,10 @@ function editing_exams_to_table(data){
 						xmlhttp.send(parameters);
 					});
 					tmp=0;
-				}else $('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+				}else{ 
+					if(check) $('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					else $('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td></td></tr>');
+				}
 				$('#table_of_editable_exams #glyphicon-edit'+value["AssignementID"]).on('click',function(){
 					var id=$(this).attr("id").replace('glyphicon-edit','');
 					edit_exam_dialog(id);

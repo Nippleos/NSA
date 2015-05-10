@@ -155,11 +155,12 @@
 		$rs=$conn->query($value);
 		if($rs===false)echo 0; else echo 1;
 	}else if($_POST['name']==='checkexamstatus'){
-		$value='SELECT AssignementID FROM Assignements WHERE Startline>CURRENT_DATE OR Deadline<CURRENT_DATE'; 
-		//naloge ki niso v izvajanju vec
+		$value='SELECT a.AssignementID FROM Assignements a LEFT JOIN ChossingAnAssignement ca ON(a.AssignementID=ca.AssignementID) GROUP BY a.AssignementID HAVING COUNT(ca.UserID)=0';
+		//dobimo tiste, ki jih noben ni izbral
 		$rs=$conn->query($value);
 		$arr=$rs->fetch_all(MYSQLI_ASSOC);//naloge ki niso v izvajanju vec
-		$value='SELECT a.AssignementID FROM Assignements a LEFT JOIN ChossingAnAssignement ca ON(a.AssignementID=ca.AssignementID) WHERE Startline<=CURRENT_DATE AND Deadline>=CURRENT_DATE GROUP BY a.AssignementID HAVING COUNT(ca.UserID)=0';
+		$value='SELECT a.AssignementID FROM Assignements a LEFT JOIN ChossingAnAssignement ca ON(a.AssignementID=ca.AssignementID) WHERE Startline>CURRENT_DATE OR Deadline<CURRENT_DATE GROUP BY a.AssignementID HAVING COUNT(ca.UserID)>0';
+		$rs=$conn->query($value);
 		$arr1=$rs->fetch_all(MYSQLI_ASSOC);
 		$niz=array();
 		foreach ($arr as $key => $value) {
@@ -168,7 +169,7 @@
 		foreach ($arr1 as $key => $value) {
 			$niz[]=$value['AssignementID'];
 		}
-		echo json_encode($niz);
+		echo json_encode($niz); //te lahko spreminja
 	}
 
 
