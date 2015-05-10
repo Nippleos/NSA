@@ -97,6 +97,12 @@
 			}
 			else echo json_encode(array("empty"=>"There are no exams in database."));
 		}
+	}else if($_POST['name']==='getlongdescription'){
+		$value='SELECT Description FROM Assignements WHERE AssignementID='.$_POST["id"].';';
+		$rs=$conn->query($value);
+		if($rs===false){echo 0; return;}
+		$arr=$rs->fetch_all(MYSQLI_ASSOC);
+		echo json_encode($arr[0]);
 	}else if($_POST['name']==='readforedit'){
 		$value='SELECT a.* FROM Assignements a INNER JOIN CollectionOfAssignements coa ON(a.AssignementID=coa.AssignementID) INNER JOIN Collection c ON(coa.CollectionID=c.CollectionID) INNER JOIN Users u ON(c.UserID=u.UserID) WHERE u.UserID='.$_POST["userid"].';';
 		$rs=$conn->query($value);

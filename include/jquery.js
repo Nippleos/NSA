@@ -434,7 +434,28 @@ $('#second_choose_of_exams_list').on('click',function(){
 					if(value['UserID']==$('#session_info #p_userid').text()){
 						if(value['Startline']==='0000-00-00')value['Startline']='/';
 						if(value['Deadline']==='0000-00-00') value['Deadline']='/';
-						$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
+						if(value['Description'].length>20){
+							var tmp=1;
+							value['Description1']=value['Description'].substring(0,20);
+							value['Description1']=value['Description1']+'...';
+						}
+						if((typeof(tmp) != "undefined") && (tmp!==null) && tmp==1) {
+							$('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td><a id="short_string'+value["AssignementID"]+'" href="#">'+value["Description1"]+'</a></td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
+							$('#short_string'+value['AssignementID']).on('click',function(){
+								var id=$(this).attr("id").replace('short_string','');
+								var parameters="name=getlongdescription&id="+id;
+								xmlhttp.onreadystatechange=function(){
+									if(xmlhttp.readyState==4 && xmlhttp.status==200){
+										var data=JSON.parse(xmlhttp.responseText);
+										alert(data['Description']);
+									}
+								}
+								xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+								xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+								xmlhttp.send(parameters);
+							});
+							tmp=0;
+						}else $('#table_of_exams').append('<tr style="background-color:#eee"><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
 
 					}else $('#table_of_exams').append('<tr><td>'+value["AssignementID"]+'</td><td>'+value["Title"]+'</td><td>'+value["Name"]+' '+value["Surname"]+'</td><td>'+value["Description"]+'</td><td>'+value["KeyWords"]+'</td><td>'+value["Created"]+'</td><td>'+value["Startline"]+'</td><td>'+value["Deadline"]+'</td><td>'+value["MaxNumber"]+'</td><td>'+value["CountNumber"]+'</td></tr>');
 				});	
@@ -472,7 +493,28 @@ $('#third_choose_of_exams_list').on('click',function(){
 				if(value['Startline']==='0000-00-00')value['Startline']='/';
 				if(value['Deadline']==='0000-00-00') value['Deadline']='/';
 				if(value['Published']==='0') var published='N'; else var published='Y';
-				$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+				if(value['Description'].length>20){
+					var tmp=1;
+					value['Description1']=value['Description'].substring(0,20);
+					value['Description1']=value['Description1']+'...';
+				}
+				if((typeof(tmp) != "undefined") && (tmp!==null) && tmp==1) {
+					$('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description"><a href="#" id="editable_short_string'+value["AssignementID"]+'">'+value["Description1"]+'</a></td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
+					$('#editable_short_string'+value["AssignementID"]).on('click',function(){
+						var id=$(this).attr("id").replace('editable_short_string','');
+						var parameters="name=getlongdescription&id="+id;
+						xmlhttp.onreadystatechange=function(){
+							if(xmlhttp.readyState==4 && xmlhttp.status==200){
+								var data=JSON.parse(xmlhttp.responseText);
+								alert(data['Description']);
+							}
+						}
+						xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+						xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+						xmlhttp.send(parameters);
+					});
+					tmp=0;
+				}else $('#table_of_editable_exams').append('<tr id="edit_exam_tr'+value["AssignementID"]+'"><td><input type="checkbox" name="hmm" value="'+value["AssignementID"]+'"></td><td>'+value["AssignementID"]+'</td><td id="title">'+value["Title"]+'</td><td id="startline">'+value["Startline"]+'</td><td id="deadline">'+value["Deadline"]+'</td><td id="published">'+published+'</td><td id="description">'+value["Description"]+'</td><td id="keywords">'+value["KeyWords"]+'</td><td><a id="" href="#"><span class="glyphicon glyphicon-remove"></span></a> <a id="glyphicon-edit'+value["AssignementID"]+'" href="#"><span class="glyphicon glyphicon-edit"></span></a></td></tr>');
 				$('#table_of_editable_exams #glyphicon-edit'+value["AssignementID"]).on('click',function(){
 					var id=$(this).attr("id").replace('glyphicon-edit','');
 					edit_exam_dialog(id);
@@ -629,6 +671,25 @@ function new_collection_dialog(){
 }
 
 function edit_exam_dialog(id){
+	if($('#editable_short_string'+id).length>0){
+		var xmlhttp=new XMLHttpRequest();
+		var parameters="name=getlongdescription&id="+id;
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState==4 && xmlhttp.status==200){
+				var data=JSON.parse(xmlhttp.responseText);
+				edit_exam_dialog1(id,data['Description']);				
+			}
+		}
+		xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(parameters);
+	}else{
+		var niz=$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text();
+		edit_exam_dialog1(id,niz);
+	}
+	
+}
+function edit_exam_dialog1(id,niz){
 	if($('#edit_exam_tr'+id+' #startline').text()==='/')var startline='';
 	else startline=$('#edit_exam_tr'+id+' #startline').text();
 	if($('#edit_exam_tr'+id+' #deadline').text()==='/') var deadline='';
@@ -657,7 +718,7 @@ function edit_exam_dialog(id){
 					'<div class="form-group"> ' +
 						'<label class="col-md-4 control-label" for="description">Description</label>'+
 						'<div class="col-md-4"> ' +
-							'<textarea style="resize:vertical" rows="10" id="description" name="description" placeholder="Description" class="form-control">'+$("#table_of_editable_exams #edit_exam_tr"+id+" #description").text()+'</textarea>'+
+							'<textarea style="resize:vertical" rows="10" id="description" name="description" placeholder="Description" class="form-control">'+niz+'</textarea>'+
 						'</div> ' +
 					'</div> '+
 					'<div class="form-group"> ' +
@@ -706,6 +767,7 @@ function edit_exam_dialog(id){
 			autoclose: true
 		});			
 	});
+	
 }
 
 function new_exam_dialog(id){
