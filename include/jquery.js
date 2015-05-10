@@ -489,18 +489,20 @@ $('#third_choose_of_exams_list').on('click',function(){
 				return;
 			}
 			$('#table_of_editable_exams').append('<tr><th></th><th>ID</th><th>Title</th><th>Startline</th><th>Deadline</th><th>Published</th><th>Description</th><th>Keywords</th><th>Toys</th></tr>');
+			editing_exams_to_table(data);
+		}
+	}
+	xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(parameters);
+});
+function editing_exams_to_table(data){
+	var xmlhttp=new XMLHttpRequest();
+	var parameters="name=checkexamstatus";
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState==4 && xmlhttp.status==200){
+			var editable_ids=JSON.parse(xmlhttp.responseText);
 			$.each(data,function(key,value){
-				var xmlhttp=new XMLHttpRequest();
-				var parameters="name=checkexamstatus&id="+value['AssignementID'];
-				xmlhttp.onreadystatechange=function(){
-					if(xmlhttp.readyState==4 && xmlhttp.status==200){
-						var data=JSON.parse(xmlhttp.responseText);
-						
-					}
-				}
-				xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
-				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xmlhttp.send(parameters);
 				if(value['Startline']==='0000-00-00')value['Startline']='/';
 				if(value['Deadline']==='0000-00-00') value['Deadline']='/';
 				if(value['Published']==='0') var published='N'; else var published='Y';
@@ -568,13 +570,14 @@ $('#third_choose_of_exams_list').on('click',function(){
 					});
 				}
 			});
+			
+			
 		}
 	}
 	xmlhttp.open("POST","ajax/ajax_exams_manipulation.php",true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send(parameters);
-});
-
+}
 function change_collection_name_dialog(id){
 	var box=bootbox.dialog({
 		title: "Change"+$("#new_exams_tr"+id+" #collection_name").text()+" name",

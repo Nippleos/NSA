@@ -161,6 +161,14 @@
 		$arr=$rs->fetch_all(MYSQLI_ASSOC);//naloge ki niso v izvajanju vec
 		$value='SELECT a.AssignementID FROM Assignements a LEFT JOIN ChossingAnAssignement ca ON(a.AssignementID=ca.AssignementID) WHERE Startline<=CURRENT_DATE AND Deadline>=CURRENT_DATE GROUP BY a.AssignementID HAVING COUNT(ca.UserID)=0';
 		$arr1=$rs->fetch_all(MYSQLI_ASSOC);
+		$niz=array();
+		foreach ($arr as $key => $value) {
+			$niz[]=$value['AssignementID'];
+		}
+		foreach ($arr1 as $key => $value) {
+			$niz[]=$value['AssignementID'];
+		}
+		echo json_encode($niz);
 	}
 
 
